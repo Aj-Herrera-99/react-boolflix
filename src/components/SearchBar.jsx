@@ -1,27 +1,35 @@
 import React, { useState } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
-import axios from "axios";
 import * as glob from "../globals/globals";
+import { getMedia } from "../utils/utils";
 
 function SearchBar() {
-    const { search, setSearch } = useGlobalContext();
+    // todo: isLoading, setIsLoading
+    const { search, setSearch, setMovies } = useGlobalContext();
     console.log("SearchBar render");
-    const [inputData, setInputData] = useState("");
 
     // actions
     const handleInputChange = (e) => {
+        if (e.target.value === "") {
+            console.log("test");
+            const params = {
+                api_key: glob.api_key,
+                query: "a",
+            };
+            getMedia(glob.api_url, "/movie", params, setMovies);
+            getMedia(glob.api_url, "/tv", params, setMovies);
+        }
         setSearch(e.target.value);
     };
 
     const handleSearchSubmit = (e) => {
         e.preventDefault();
-        const movieParams = {
+        const params = {
             api_key: glob.api_key,
-            query: "a",
+            query: search ? search : "a",
         };
-        axios
-            .get(`${glob.api_url}/movie`, { params: movieParams })
-            .then((res) => console.log(res.data));
+        getMedia(glob.api_url, "/movie", params, setMovies);
+        getMedia(glob.api_url, "/tv", params, setMovies);
     };
     return (
         <form onSubmit={handleSearchSubmit}>
