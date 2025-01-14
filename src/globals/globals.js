@@ -1,5 +1,5 @@
-const apiKey = import.meta.env.VITE_API_KEY;
-const apiUrl = import.meta.env.VITE_API_URL;
-const apiImgUrl = import.meta.env.VITE_API_IMG_URL;
+const api_key = import.meta.env.VITE_API_KEY;
+const api_url = import.meta.env.VITE_API_URL;
+const api_img_url = import.meta.env.VITE_API_IMG_URL;
 
-export { apiKey, apiUrl, apiImgUrl };
+export { api_key, api_url, api_img_url };
