@@ -11,12 +11,12 @@ function Main() {
         <main className="bg-green-300">
             <MediaSection title="Movies">
                 {movies.map((movie) => (
-                    <Card type="movie" media={movie}></Card>
+                    <Card key={movie.id} type="movie" media={movie}></Card>
                 ))}
             </MediaSection>
             <MediaSection title="Series">
                 {series.map((serie) => (
-                    <Card type="movie" media={serie}></Card>
+                    <Card key={serie.id} type="serie" media={serie}></Card>
                 ))}
             </MediaSection>
         </main>
