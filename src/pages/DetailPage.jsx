@@ -4,7 +4,7 @@ import { useGlobalContext } from "../contexts/GlobalContext";
 import { api_base_url, api_img_url, api_key } from "../globals/globals";
 import Rating from "../components/Rating";
 import Loader from "../components/Loader";
-import axios from "axios";
+import { getRndInteger } from "../utils/utils";
 
 function DetailPage() {
     const { getMedia } = useGlobalContext();
@@ -18,7 +18,11 @@ function DetailPage() {
     let { title, name, poster_path, vote_average, overview, credits, videos } =
         media;
     let { cast } = credits || { cast: null };
-    let videoPath = videos?.results[0].key;
+    let videoPath;
+    if (videos?.results) {
+        const rndIndex = getRndInteger(0, videos.results.length - 1);
+        videoPath = videos.results[rndIndex]?.key;
+    }
 
     useEffect(() => {
         (async () => {
@@ -49,14 +53,14 @@ function DetailPage() {
                 <Loader />
             ) : (
                 <>
-                    <div className="absolute w-full h-full bg-[#00000090]">
-                        <iframe
-                            className="absolute top-0 left-0 w-full h-full -z-10 iframe"
-                            src={`https://www.youtube.com/embed/${videoPath}?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1&loop=1`}
-                            frameborder="0"
-                            allowFullScreen={true}
-                        ></iframe>
-                    </div>
+                    {videoPath && (
+                        <div className="absolute w-full h-full bg-[#00000090]">
+                            <iframe
+                                className="absolute top-0 left-0 w-full h-full -z-10 iframe"
+                                src={`https://www.youtube.com/embed/${videoPath}?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1&loop=1`}
+                            ></iframe>
+                        </div>
+                    )}
                     <section className="relative flex flex-col items-center justify-between py-8 gap-y-12 lg:flex-row">
                         <div className="lg:w-[40vw]">
                             <img

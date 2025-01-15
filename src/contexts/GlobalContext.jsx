@@ -7,7 +7,6 @@ const GlobalContext = createContext();
 const GlobalContextProvider = ({ children }) => {
     const [movies, setMovies] = useState([]);
     const [series, setSeries] = useState([]);
-    const [search, setSearch] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [isHomePage, setIsHomepage] = useState(false);
 
@@ -40,8 +39,6 @@ const GlobalContextProvider = ({ children }) => {
                 setMovies,
                 series,
                 setSeries,
-                search,
-                setSearch,
                 isLoading,
                 setIsLoading,
                 getMedia,

@@ -1,44 +1,26 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import { useNavigate } from "react-router-dom";
 import { api_key, api_search_url } from "../globals/globals";
 
 function SearchBar() {
-    const { search, setSearch, setMovies, setSeries, getMedia, setIsLoading } =
+    const { setMovies, setSeries, getMedia, setIsLoading } =
         useGlobalContext();
 
     const [isShown, setIsShown] = useState(false);
 
+    const inputRef = useRef(null);
+
     const navigate = useNavigate();
 
-    // actions
-    const handleInputChange = (e) => {
-        // * alla cancellazione dell'input mi fa il fetch dei media con query="a"
-        // if (e.target.value === "") {
-        //     const params = {
-        //         api_key: api_key,
-        //         query: "a",
-        //     };
-        //     Promise.all([
-        //         getMedia(api_search_url, "/movie", params),
-        //         getMedia(api_search_url, "/tv", params),
-        //     ])
-        //         .then(([resMovie, resSeries]) => {
-        //             setMovies(resMovie.data.results);
-        //             setSeries(resSeries.data.results);
-        //         })
-        //         .catch((err) => console.error(err));
-        // }
-        setSearch(e.target.value);
-    };
 
     const handleSearchSubmit = (e) => {
         e.preventDefault();
         setIsLoading(true);
-        if (search) {
+        if (inputRef.current?.value) {
             const params = {
                 api_key: api_key,
-                query: search ? search : "a",
+                query: inputRef.current.value,
             };
             Promise.all([
                 getMedia(api_search_url, "/movie", params),
@@ -48,7 +30,6 @@ function SearchBar() {
                     setMovies(resMovie.data.results);
                     setSeries(resSeries.data.results);
                     setIsShown(false);
-                    setSearch("");
                     navigate("/search");
                 })
                 .catch((err) => console.error(err))
@@ -66,11 +47,10 @@ function SearchBar() {
         <>
             <form onSubmit={handleSearchSubmit} className="hidden md:flex">
                 <input
+                    ref={inputRef}
                     className="p-1 rounded-md"
-                    onChange={handleInputChange}
                     type="text"
                     placeholder="Search a title"
-                    value={search}
                 />
                 <button
                     className="px-3 py-1 ml-2 bg-red-700 rounded-md"
@@ -101,11 +81,10 @@ function SearchBar() {
                             className="text-2xl text-white cursor-pointer fa-solid fa-angle-left"
                         ></i>
                         <input
+                            ref={inputRef}
                             className="p-1 rounded-md grow"
-                            onChange={handleInputChange}
                             type="text"
                             placeholder="Search a title"
-                            value={search}
                         />
                     </form>
                 </div>
