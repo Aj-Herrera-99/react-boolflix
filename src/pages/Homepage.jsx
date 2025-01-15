@@ -24,7 +24,7 @@ function Homepage() {
 function MediaSection({ title, children }) {
     const settings = {
         infinite: true,
-        slidesToShow: 3,
+        slidesToShow: 5,
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 2500,
@@ -43,9 +43,15 @@ function MediaSection({ title, children }) {
         ),
         responsive: [
             {
-                breakpoint: 576,
+                breakpoint: 1024,
                 settings: {
-                    slidesToShow: 1,
+                    slidesToShow: 3,
+                },
+            },
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 2,
                 },
             },
         ],
@@ -53,11 +59,11 @@ function MediaSection({ title, children }) {
 
     return (
         <>
+            <section className="lg:max-w-[87vw] xl:max-w-[90vw] mx-auto py-8">
             <h2 className="p-4 text-4xl font-light tracking-wide text-white capitalize">
                 {title}
             </h2>
-            <section className="max-w-[100vw] lg:max-w-[80vw] mx-auto pb-4">
-                <Slider {...settings}>{children}</Slider>
+                <Slider {...settings} swipe={true}>{children}</Slider>
             </section>
         </>
     );
