@@ -34,7 +34,7 @@ function Card({ type, media }) {
                 ></img>
             </p>
             <div>
-                <span>Vote:</span>
+                <span>Rating: </span>
                 {rating.map((star, index) => (
                     <i
                         key={index}

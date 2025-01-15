@@ -4,8 +4,7 @@ import * as glob from "../globals/globals";
 import { getMedia } from "../utils/utils";
 
 function SearchBar() {
-    const { search, setSearch, setMovies, setSeries } =
-        useGlobalContext();
+    const { search, setSearch, setMovies, setSeries } = useGlobalContext();
     console.log("SearchBar render");
 
     // actions
@@ -47,12 +46,17 @@ function SearchBar() {
     return (
         <form onSubmit={handleSearchSubmit}>
             <input
+                className="p-1 rounded-md"
                 onChange={handleInputChange}
                 type="text"
                 placeholder="Search a title"
                 value={search}
             />
-            <button type="submit">Search</button>
+            <button className="px-3 py-1 ml-2 bg-red-700 rounded-md" type="submit">
+                <span>
+                    <i class="fa-solid fa-magnifying-glass text-white"></i>
+                </span>
+            </button>
         </form>
     );
 }
