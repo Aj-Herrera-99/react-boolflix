@@ -35,8 +35,6 @@ function DetailPage() {
             }),
         ])
             .then(([resMedia, resCast]) => {
-                console.log(resMedia.data);
-                console.log(resCast.data.cast);
                 setMedia(resMedia.data);
                 setCast(resCast.data.cast);
             })
@@ -75,8 +73,8 @@ function DetailPage() {
                         <h2 className="pb-3 text-3xl font-semibold tracking-wide">
                             Cast
                         </h2>
-                        <div className="max-w-full overflow-x-auto">
-                            <ul className="flex gap-5 p-3 w-fit">
+                        <div className="p-1 overflow-x-auto border-x-2 scrollbar-hide border-x-stone-400 ">
+                            <ul className="flex gap-4 w-fit">
                                 {cast.map((actor) => (
                                     <ActorCard key={actor.id} actor={actor} />
                                 ))}

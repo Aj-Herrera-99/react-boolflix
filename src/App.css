@@ -95,3 +95,23 @@
 .debug {
     border: solid 1px #ff3d00;
 }
+
+@media (max-width: 768px) {
+    .slick-dots {
+        display:none !important;
+    }
+}
+.slick-dots li button:before {
+    color: white !important;
+}
+
+.slick-next, .slick-prev {
+    scale: 2;
+}
+
+.slick-arrow.slick-prev {
+    translate: -20px;
+}
+.slick-arrow.slick-next {
+    translate: 20px;
+}

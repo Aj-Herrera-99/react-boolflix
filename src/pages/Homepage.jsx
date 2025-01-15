@@ -27,10 +27,20 @@ function MediaSection({ title, children }) {
         slidesToShow: 3,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 3000,
+        autoplaySpeed: 2500,
         cssEase: "ease-out",
         centerMode: true,
         swipeToSlide: true,
+        dots: true,
+        appendDots: (dots) => (
+            <div
+                style={{
+                    padding: "0px",
+                }}
+            >
+                <ul style={{ margin: "0px" }}> {dots} </ul>
+            </div>
+        ),
         responsive: [
             {
                 breakpoint: 576,
@@ -46,7 +56,7 @@ function MediaSection({ title, children }) {
             <h2 className="p-4 text-4xl font-light tracking-wide text-white capitalize">
                 {title}
             </h2>
-            <section className="max-w-[100vw] lg:max-w-[80vw] mx-auto">
+            <section className="max-w-[100vw] lg:max-w-[80vw] mx-auto pb-4">
                 <Slider {...settings}>{children}</Slider>
             </section>
         </>

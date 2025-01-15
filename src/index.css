@@ -15,8 +15,16 @@
 
 body {
     background-color: #434343;
-    background-color: rgb(0, 0, 0, .94);
+    background-color: rgb(0, 0, 0, 0.94);
     padding-top: 72px;
     display: flex;
     height: 100vh;
+    
+}
+
+html {
+    -ms-overflow-style: none;
+    /* Internet Explorer 10+ */
+    scrollbar-width: none;
+    /* Firefox */
 }
