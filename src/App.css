@@ -79,3 +79,19 @@
         transform: translateY(-5px);
     }
 }
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    /* Internet Explorer 10+ */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+    /* WebKit */
+}
+
+.debug {
+    border: solid 1px #ff3d00;
+}

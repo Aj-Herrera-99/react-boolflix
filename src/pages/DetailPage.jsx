@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { useGlobalContext } from "../contexts/GlobalContext";
@@ -10,7 +9,9 @@ function DetailPage() {
     const { id } = useParams();
     const location = useLocation();
     const type = location.state.type;
+
     const [media, setMedia] = useState({});
+    const [cast, setCast] = useState([]);
 
     let {
         title,
@@ -24,26 +25,39 @@ function DetailPage() {
     } = { ...media };
 
     useEffect(() => {
-        (async () => {
-            const endpoint = type === "movie" ? "/movie" : "/tv";
-            const res = await getMedia(api_base_url, `${endpoint}/${id}`, {
+        const endpoint = type === "movie" ? "/movie" : "/tv";
+        Promise.all([
+            getMedia(api_base_url, `${endpoint}/${id}`, {
                 api_key,
-            });
-            setMedia(res.data);
-        })();
+            }),
+            getMedia(api_base_url, `${endpoint}/${id}/credits`, {
+                api_key,
+            }),
+        ])
+            .then(([resMedia, resCast]) => {
+                console.log(resMedia.data);
+                console.log(resCast.data.cast);
+                setMedia(resMedia.data);
+                setCast(resCast.data.cast);
+            })
+            .catch((err) => console.error(err));
     }, []);
     return (
         <>
-            <section className="flex gap-12 p-8">
-                <div className="overflow-hidden border border-white rounded-md w-[300px] sm:w-[400px]">
-                    <img src={`${api_img_url}/w500${poster_path}`} alt="" />
+            <section className="flex flex-wrap items-center justify-between gap-8 p-8 md:flex-nowrap">
+                <div>
+                    <img
+                        className="border border-white rounded-md"
+                        src={`${api_img_url}/w500${poster_path}`}
+                        alt=""
+                    />
                 </div>
 
-                <div>
+                <div className="flex flex-col gap-3 sm:w-[70vw]">
                     <div className="flex items-center gap-12 [&>*]:w-1/2">
                         <h1
                             title={type === "movie" ? title : name}
-                            className="pb-8 text-6xl font-light tracking-wide line-clamp-2"
+                            className="pb-4 text-6xl font-light tracking-wide line-clamp-2"
                         >
                             {type === "movie" ? title : name}
                         </h1>
@@ -51,13 +65,42 @@ function DetailPage() {
                             <Rating stars={Math.ceil(vote_average / 2)} />
                         </div>
                     </div>
-                    <h2 className="text-3xl font-semibold tracking-wide">
-                        Overview
-                    </h2>
-                    <p className="max-w-[600px]">{overview}</p>
+                    <div>
+                        <h2 className="pb-3 text-3xl font-semibold tracking-wide">
+                            Overview
+                        </h2>
+                        <p>{overview}</p>
+                    </div>
+                    <div>
+                        <h2 className="pb-3 text-3xl font-semibold tracking-wide">
+                            Cast
+                        </h2>
+                        <div className="max-w-full overflow-x-auto">
+                            <ul className="flex gap-5 p-3 w-fit">
+                                {cast.map((actor) => (
+                                    <ActorCard key={actor.id} actor={actor} />
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </section>
         </>
+    );
+}
+
+function ActorCard({ actor }) {
+    return (
+        <li
+            title={actor.name}
+            className="bg-stone-500 w-[80px] aspect-square overflow-hidden rounded-md cursor-pointer"
+        >
+            <img
+                className="object-cover w-full h-full"
+                src={`${api_img_url}/w500${actor.profile_path}`}
+                alt=""
+            />
+        </li>
     );
 }
 
