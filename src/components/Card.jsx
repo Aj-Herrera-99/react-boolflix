@@ -1,8 +1,10 @@
 import React, { useRef } from "react";
 import { api_img_url } from "../globals/globals";
+import { Link } from "react-router-dom";
 
 function Card({ type, media }) {
     let {
+        id,
         title,
         original_title,
         name,
@@ -44,14 +46,16 @@ function Card({ type, media }) {
 
     return (
         <div className="py-4 ">
-            <div
+            <Link
+                to={`/search/${id}`}
+                state={{type}}
                 onMouseEnter={handleHover}
                 onMouseLeave={handleHover}
-                className="mx-6 overflow-hidden border border-white rounded-md shadow-md cursor-pointer bounce-anim shadow-stone-800"
+                className="block mx-6 overflow-hidden border border-white rounded-md shadow-md cursor-pointer bounce-anim shadow-stone-800"
             >
                 <div>
                     <img
-                    className="object-cover w-full"
+                        className="object-cover w-full"
                         src={`${api_img_url}/w342${poster_path}`}
                         alt={type === "movie" ? title : name}
                     />
@@ -86,7 +90,7 @@ function Card({ type, media }) {
                         {rating}
                     </div>
                 </div>
-            </div>
+            </Link>
         </div>
     );
 }
