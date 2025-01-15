@@ -2,7 +2,7 @@ import "./App.css";
 import { GlobalContextProvider } from "./contexts/GlobalContext";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { HashRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import DefaultLayout from "./pages/DefaultLayout";
 import Homepage from "./pages/Homepage";
@@ -12,7 +12,7 @@ import DetailPage from "./pages/DetailPage";
 function App() {
     return (
         <GlobalContextProvider>
-            <HashRouter>
+            <BrowserRouter>
                 <Routes>
                     <Route Component={DefaultLayout}>
                         <Route index Component={Homepage}></Route>
@@ -23,7 +23,7 @@ function App() {
                         ></Route>
                     </Route>
                 </Routes>
-            </HashRouter>
+            </BrowserRouter>
         </GlobalContextProvider>
     );
 }

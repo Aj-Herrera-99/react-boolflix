@@ -1,4 +1,4 @@
-#root{
+#root {
     padding-top: 72px;
     height: 100vh;
 }
@@ -95,15 +95,17 @@
 }
 
 @media (max-width: 1024px) {
-    .slick-dots, .slick-arrow {
-        display:none !important;
+    .slick-dots,
+    .slick-arrow {
+        display: none !important;
     }
 }
 .slick-dots li button:before {
     color: white !important;
 }
 
-.slick-next, .slick-prev {
+.slick-next,
+.slick-prev {
     scale: 2;
 }
 
