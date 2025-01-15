@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import { api_img_url } from "../globals/globals";
 
 function Card({ style, type, media }) {
@@ -16,31 +16,42 @@ function Card({ style, type, media }) {
     const totalRating = Array.from({ length: 5 - rating.length });
     const imgSrc = `https://flagsapi.com/${original_language.toUpperCase()}/shiny/32.png`;
 
-    const [isHovered, setIsHovered] = useState(false);
+    const overlayRef = useRef(null);
+
+    const handleHover = (e) => {
+        switch (e.type) {
+            case "mouseenter":
+                overlayRef.current.classList.add("!flex");
+                break;
+            case "mouseenter":
+                overlayRef.current.classList.remove("!flex");
+                break;
+            default:
+                overlayRef.current.classList.remove("!flex");
+        }
+    };
 
     return (
         <div
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
+            onMouseEnter={handleHover}
+            onMouseLeave={handleHover}
             style={style}
-            className={` w-[275px] h-[375px] slider-child px-2`}
+            className={` w-[275px] h-[375px] slider-child px-2 cursor-pointer`}
         >
-            {!isHovered ? (
-                <>
-                    <div className="h-full overflow-hidden rounded-md">
-                        <img
-                            className="object-cover w-full h-full"
-                            src={`${api_img_url}/w342${poster_path}`}
-                            alt={type === "movie" ? title : name}
-                        />
-                    </div>
-                </>
-            ) : (
-                <div className="flex flex-col justify-around h-full px-2 text-white bg-black rounded-md ">
+            <div className="h-full bounce-anim">
+                <div className="h-full">
+                    <img
+                        className="object-cover w-full h-full rounded-md"
+                        src={`${api_img_url}/w342${poster_path}`}
+                        alt={type === "movie" ? title : name}
+                    />
+                </div>
+                <div
+                    ref={overlayRef}
+                    className="absolute top-0 bottom-0 z-30 flex-col justify-around hidden text-white bg-[#000000b5] rounded-md right-0 left-0 px-2 border border-white"
+                >
                     <p>
-                        <span className="text-xl font-bold capitalize">
-                            Title:
-                        </span>{" "}
+                        <span className="text-xl font-bold capitalize">Title:</span>{" "}
                         <br /> {type === "movie" ? title : name}
                     </p>
                     <p>
@@ -74,7 +85,7 @@ function Card({ style, type, media }) {
                         ))}
                     </div>
                 </div>
-            )}
+            </div>
         </div>
     );
 }
