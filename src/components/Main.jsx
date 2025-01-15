@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import Card from "./Card";
 import Slider from "@ant-design/react-slick";
@@ -28,28 +28,30 @@ function Main() {
 function MediaSection({ title, media, children }) {
     const settings = {
         infinite: true,
-        slidesToShow: 3,
+        slidesToShow: 4,
         slidesToScroll: 1,
         autoplay: true,
-        speed: 4000,
-        autoplaySpeed: 1000,
-        cssEase: "linear",
-        adaptiveHeight: true,
-        variableWidth: true,
-        pauseOnDotsHover: true,
+        autoplaySpeed: 3000,
+        cssEase: "ease-out",
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 1,
+                },
+            },
+        ],
     };
+
     return (
         <>
             <h2 className="p-4 text-4xl font-light tracking-wide text-white capitalize">
                 {title}
             </h2>
-            <section className="max-w-[92vw] mx-auto bg-red-300">
-                <Slider
-                    {...settings}
-                >
-                    {children}
-                </Slider>
-            </section>ù
+            <section className="max-w-[78vw] sm:max-w-[88vw] xl:max-w-[92vw] mx-auto">
+                <Slider {...settings}>{children}</Slider>
+            </section>
+            ù
         </>
     );
 }

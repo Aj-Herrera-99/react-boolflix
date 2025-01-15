@@ -17,9 +17,9 @@ function Card({ style, type, media }) {
     for (let i = 1; i <= 5; i++) {
         const star =
             i <= Math.ceil(vote_average / 2) ? (
-                <i className="text-yellow-500 fa-solid fa-star"></i>
+                <i key={i} className="text-yellow-500 fa-solid fa-star"></i>
             ) : (
-                <i className="text-yellow-500 fa-regular fa-star"></i>
+                <i key={i} className="text-yellow-500 fa-regular fa-star"></i>
             );
         rating.push(star);
     }
@@ -43,11 +43,11 @@ function Card({ style, type, media }) {
     };
 
     return (
-        <div className="py-4">
+        <div className="py-4 ">
             <div
                 onMouseEnter={handleHover}
                 onMouseLeave={handleHover}
-                className="w-[275px] h-[375px] mx-4 cursor-pointer  bounce-anim"
+                className="mx-4 cursor-pointer bounce-anim"
             >
                 <div className="w-full h-full">
                     <img
