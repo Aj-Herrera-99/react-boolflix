@@ -46,7 +46,7 @@ function MediaSection({ title, children }) {
             <h2 className="p-4 text-4xl font-light tracking-wide text-white capitalize">
                 {title}
             </h2>
-            <section className="max-w-[78vw] sm:max-w-[88vw] xl:max-w-[92vw] mx-auto">
+            <section className="max-w-[100vw] lg:max-w-[80vw] mx-auto">
                 <Slider {...settings}>{children}</Slider>
             </section>
         </>

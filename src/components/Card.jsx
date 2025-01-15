@@ -47,18 +47,18 @@ function Card({ type, media }) {
             <div
                 onMouseEnter={handleHover}
                 onMouseLeave={handleHover}
-                className="mx-4 cursor-pointer bounce-anim"
+                className="mx-6 overflow-hidden border border-white rounded-md shadow-md cursor-pointer bounce-anim shadow-stone-800"
             >
                 <div>
                     <img
-                        className="overflow-hidden rounded-md"
+                    className="object-cover w-full"
                         src={`${api_img_url}/w342${poster_path}`}
                         alt={type === "movie" ? title : name}
                     />
                 </div>
                 <div
                     ref={overlayRef}
-                    className="absolute top-0 bottom-0 z-30 flex-col justify-around hidden text-white bg-[#000000b5] rounded-md right-0 left-0 px-2 border-2 border-white"
+                    className="absolute top-0 bottom-0 z-30 flex-col justify-around hidden text-white bg-[#000000b5] rounded-md right-0 left-0 px-2"
                 >
                     <p>
                         <strong className="text-xl font-bold capitalize">
