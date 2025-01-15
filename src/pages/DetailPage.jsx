@@ -42,20 +42,17 @@ function DetailPage() {
     }, []);
     return (
         <>
-            <section
-                style={{ width: "calc(100vw - 2rem)" }}
-                className="flex flex-col items-center justify-between p-8 mx-auto gap-y-12 lg:flex-row"
-            >
-                <div className="w-full lg:w-[30vw]">
+            <section className="flex flex-col items-center justify-between py-8 gap-y-12 lg:flex-row">
+                <div className="lg:w-[40vw]">
                     <img
-                        className="w-[342px] border border-white rounded-md mx-auto"
+                        className="w-[350px] mx-auto border border-white rounded-md "
                         src={`${api_img_url}/w342${poster_path}`}
                         alt=""
                     />
                 </div>
 
-                <div className="lg:w-[70vw] w-full flex flex-col gap-6 lg:pl-36">
-                    <div className="flex items-center flex-wrap gap-8 lg:[&>*]:w-1/2">
+                <div className="flex flex-col gap-6 w-[100vw] lg:w-[60vw]">
+                    <div className="flex items-center flex-wrap gap-8 lg:[&>*]:w-1/2 px-8">
                         <h1
                             title={type === "movie" ? title : name}
                             className="pb-4 text-5xl font-semibold tracking-wider lg:font-light md:text-6xl"
@@ -66,18 +63,18 @@ function DetailPage() {
                             <Rating stars={Math.ceil(vote_average / 2)} />
                         </div>
                     </div>
-                    <div>
+                    <div className="px-8">
                         <h2 className="pb-3 text-3xl font-semibold tracking-wide">
                             Overview
                         </h2>
                         <p className="lg:w-1/2">{overview}</p>
                     </div>
-                    <div>
+                    <div className="pl-8">
                         <h2 className="pb-3 text-3xl font-semibold tracking-wide">
                             Cast
                         </h2>
                         <div className="overflow-x-auto border-x-2 border-x-stone-400 scrollbar-hide">
-                            <ul className="flex gap-4 w-fit">
+                            <ul className="flex gap-4 p-1 w-fit">
                                 {cast.map((actor) => (
                                     <ActorCard key={actor.id} actor={actor} />
                                 ))}

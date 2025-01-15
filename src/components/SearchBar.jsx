@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import * as glob from "../globals/globals";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 function SearchBar() {
     const { search, setSearch, setMovies, setSeries, getMedia } =
         useGlobalContext();
+
+    const [isShown, setIsShown] = useState(false);
 
     const navigate = useNavigate();
 
@@ -44,29 +46,69 @@ function SearchBar() {
                 .then(([resMovie, resSeries]) => {
                     setMovies(resMovie.data.results);
                     setSeries(resSeries.data.results);
+                    setIsShown(false);
+                    setSearch("");
                     navigate("/search");
                 })
                 .catch((err) => console.error(err));
         }
     };
+
+    // mobile
+
+    const showSearchBar = () => {
+        setIsShown(true);
+    };
+
     return (
-        <form onSubmit={handleSearchSubmit}>
-            <input
-                className="p-1 rounded-md"
-                onChange={handleInputChange}
-                type="text"
-                placeholder="Search a title"
-                value={search}
-            />
+        <>
+            <form onSubmit={handleSearchSubmit} className="hidden md:flex">
+                <input
+                    className="p-1 rounded-md"
+                    onChange={handleInputChange}
+                    type="text"
+                    placeholder="Search a title"
+                    value={search}
+                />
+                <button
+                    className="px-3 py-1 ml-2 bg-red-700 rounded-md"
+                    type="submit"
+                >
+                    <span>
+                        <i className="text-white fa-solid fa-magnifying-glass"></i>
+                    </span>
+                </button>
+            </form>
+
             <button
-                className="px-3 py-1 ml-2 bg-red-700 rounded-md"
-                type="submit"
+                onClick={showSearchBar}
+                className="px-3 py-1 ml-2 bg-red-700 rounded-md md:hidden"
             >
                 <span>
                     <i className="text-white fa-solid fa-magnifying-glass"></i>
                 </span>
             </button>
-        </form>
+            {isShown && (
+                <div className="h-[100vh] absolute z-20 top-0 left-0 w-full bg-inherit p-4 md:hidden">
+                    <form
+                        onSubmit={handleSearchSubmit}
+                        className="flex items-center w-full gap-4"
+                    >
+                        <i
+                            onClick={() => setIsShown(false)}
+                            className="text-2xl text-white cursor-pointer fa-solid fa-angle-left"
+                        ></i>
+                        <input
+                            className="p-1 rounded-md grow"
+                            onChange={handleInputChange}
+                            type="text"
+                            placeholder="Search a title"
+                            value={search}
+                        />
+                    </form>
+                </div>
+            )}
+        </>
     );
 }
 
