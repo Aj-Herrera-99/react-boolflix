@@ -17,8 +17,8 @@ function DetailPage() {
 
     let { title, name, poster_path, vote_average, overview, credits, videos } =
         media;
-    let { cast } = credits;
-    let videoPath = videos.results[0].key;
+    let { cast } = credits || { cast: null };
+    let videoPath = videos?.results[0].key;
 
     useEffect(() => {
         (async () => {
@@ -94,7 +94,7 @@ function DetailPage() {
                                 </h2>
                                 <div className="overflow-x-auto border-x-2 border-x-stone-400 scrollbar-hide">
                                     <ul className="flex gap-4 p-1 w-fit">
-                                        {cast.map((actor) => (
+                                        {cast?.map((actor) => (
                                             <ActorCard
                                                 key={actor.id}
                                                 actor={actor}
