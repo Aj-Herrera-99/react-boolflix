@@ -1,6 +1,6 @@
 import React from "react";
 import SearchBar from "./SearchBar";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useGlobalContext } from "../contexts/GlobalContext";
 
 function Header() {
@@ -11,7 +11,6 @@ function Header() {
         setSearch("");
     };
 
-    // todo: fissare l'altezza di header con valori globali (occhio responsive)
     return (
         <header className="fixed top-0 z-10 flex items-center justify-between w-full p-4 bg-black shadow-md shadow-stone-500">
             <Link

@@ -1,7 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
-import * as glob from "../globals/globals";
 import { useNavigate } from "react-router-dom";
+import { api_key, api_search_url } from "../globals/globals";
 
 function SearchBar() {
     const { search, setSearch, setMovies, setSeries, getMedia, setIsLoading } =
@@ -16,12 +16,12 @@ function SearchBar() {
         // * alla cancellazione dell'input mi fa il fetch dei media con query="a"
         // if (e.target.value === "") {
         //     const params = {
-        //         api_key: glob.api_key,
+        //         api_key: api_key,
         //         query: "a",
         //     };
         //     Promise.all([
-        //         getMedia(glob.api_search_url, "/movie", params),
-        //         getMedia(glob.api_search_url, "/tv", params),
+        //         getMedia(api_search_url, "/movie", params),
+        //         getMedia(api_search_url, "/tv", params),
         //     ])
         //         .then(([resMovie, resSeries]) => {
         //             setMovies(resMovie.data.results);
@@ -37,12 +37,12 @@ function SearchBar() {
         if (search) {
             setIsLoading(true);
             const params = {
-                api_key: glob.api_key,
+                api_key: api_key,
                 query: search ? search : "a",
             };
             Promise.all([
-                getMedia(glob.api_search_url, "/movie", params),
-                getMedia(glob.api_search_url, "/tv", params),
+                getMedia(api_search_url, "/movie", params),
+                getMedia(api_search_url, "/tv", params),
             ])
                 .then(([resMovie, resSeries]) => {
                     setMovies(resMovie.data.results);

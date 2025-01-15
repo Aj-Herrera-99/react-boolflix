@@ -24,7 +24,7 @@ function Homepage() {
 function MediaSection({ title, children, isLoading }) {
     const settings = {
         infinite: true,
-        slidesToShow: 5,
+        slidesToShow: 4,
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 2500,
@@ -43,7 +43,7 @@ function MediaSection({ title, children, isLoading }) {
         ),
         responsive: [
             {
-                breakpoint: 1024,
+                breakpoint: 1280,
                 settings: {
                     slidesToShow: 3,
                 },

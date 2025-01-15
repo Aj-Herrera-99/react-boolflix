@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import * as glob from "../globals/globals";
 import axios from "axios";
+import { api_key, api_trending_url } from "../globals/globals";
 
 const GlobalContext = createContext();
 
@@ -18,12 +18,12 @@ const GlobalContextProvider = ({ children }) => {
     useEffect(() => {
         setIsLoading(true);
         const params = {
-            api_key: glob.api_key,
+            api_key: api_key,
             language: "en-US",
         };
         Promise.all([
-            getMedia(glob.api_trending_url, "/movie/week", params),
-            getMedia(glob.api_trending_url, "/tv/week", params),
+            getMedia(api_trending_url, "/movie/week", params),
+            getMedia(api_trending_url, "/tv/week", params),
         ])
             .then(([resMovie, resSeries]) => {
                 setMovies(resMovie.data.results);
