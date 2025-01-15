@@ -10,14 +10,25 @@ function Card({ style, type, media }) {
         original_language,
         poster_path,
         vote_average,
-    } = media;
+    } = { ...media };
     if (original_language == "en") original_language = "gb";
-    const rating = Array.from({ length: Math.ceil(vote_average / 2) });
-    const totalRating = Array.from({ length: 5 - rating.length });
+
+    const rating = [];
+    for (let i = 1; i <= 5; i++) {
+        const star =
+            i <= Math.ceil(vote_average / 2) ? (
+                <i className="text-yellow-500 fa-solid fa-star"></i>
+            ) : (
+                <i className="text-yellow-500 fa-regular fa-star"></i>
+            );
+        rating.push(star);
+    }
+
     const imgSrc = `https://flagsapi.com/${original_language.toUpperCase()}/shiny/32.png`;
 
     const overlayRef = useRef(null);
 
+    // actions
     const handleHover = (e) => {
         switch (e.type) {
             case "mouseenter":
@@ -32,14 +43,11 @@ function Card({ style, type, media }) {
     };
 
     return (
-        <div
-            style={style}
-            className={` w-[275px] h-[375px] slider-child cursor-pointer`}
-        >
+        <div style={style} className={` w-[275px] h-[375px] slider-child`}>
             <div
                 onMouseEnter={handleHover}
                 onMouseLeave={handleHover}
-                className="h-full px-2 bounce-anim"
+                className="h-full px-2 cursor-pointer bounce-anim"
             >
                 <div className="h-full">
                     <img
@@ -53,40 +61,29 @@ function Card({ style, type, media }) {
                     className="absolute top-0 bottom-0 z-30 flex-col justify-around hidden text-white bg-[#000000b5] rounded-md right-2 left-2 px-2 border-2 border-white"
                 >
                     <p>
-                        <span className="text-xl font-bold capitalize">
+                        <strong className="text-xl font-bold capitalize">
                             Title:
-                        </span>{" "}
+                        </strong>{" "}
                         <br /> {type === "movie" ? title : name}
                     </p>
                     <p>
-                        <span className="text-xl font-bold capitalize">
+                        <strong className="text-xl font-bold capitalize">
                             Original Title:
-                        </span>{" "}
+                        </strong>{" "}
                         <br />
                         {type === "movie" ? original_title : original_name}
                     </p>
                     <p>
-                        <span className="text-xl font-bold capitalize">
+                        <strong className="text-xl font-bold capitalize">
                             Original Language:
-                        </span>{" "}
+                        </strong>{" "}
                         <br /> <img width={32} src={imgSrc}></img>
                     </p>
                     <div>
-                        <span className="text-xl font-bold capitalize">
+                        <strong className="text-xl font-bold capitalize">
                             Rating: <br />{" "}
-                        </span>
-                        {rating.map((star, index) => (
-                            <i
-                                key={index}
-                                className="text-yellow-500 fa-solid fa-star"
-                            ></i>
-                        ))}
-                        {totalRating.map((star, index) => (
-                            <i
-                                key={index}
-                                className="text-yellow-500 fa-regular fa-star"
-                            ></i>
-                        ))}
+                        </strong>
+                        {rating}
                     </div>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { getMedia } from "../utils/utils";
 import * as glob from "../globals/globals";
+import axios from "axios";
 
 const GlobalContext = createContext();
 
@@ -10,14 +10,18 @@ const GlobalContextProvider = ({ children }) => {
     const [search, setSearch] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
+    async function getMedia(baseURL, endpoint, params) {
+        return await axios.get(`${baseURL}${endpoint}`, { params });
+    }
+
     useEffect(() => {
         const params = {
             api_key: glob.api_key,
-            query: "a",
+            language: "en-US",
         };
         Promise.all([
-            getMedia(glob.api_url, "/movie", params),
-            getMedia(glob.api_url, "/tv", params),
+            getMedia(glob.api_trending_url, "/movie/week", params),
+            getMedia(glob.api_trending_url, "/tv/week", params),
         ])
             .then(([resMovie, resSeries]) => {
                 setMovies(resMovie.data.results);
@@ -37,6 +41,7 @@ const GlobalContextProvider = ({ children }) => {
                 setSearch,
                 isLoading,
                 setIsLoading,
+                getMedia,
             }}
         >
             {children}

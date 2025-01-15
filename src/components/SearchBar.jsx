@@ -1,10 +1,10 @@
 import React from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import * as glob from "../globals/globals";
-import { getMedia } from "../utils/utils";
 
 function SearchBar() {
-    const { search, setSearch, setMovies, setSeries } = useGlobalContext();
+    const { search, setSearch, setMovies, setSeries, getMedia } =
+        useGlobalContext();
 
     // actions
     const handleInputChange = (e) => {
@@ -14,8 +14,8 @@ function SearchBar() {
                 query: "a",
             };
             Promise.all([
-                getMedia(glob.api_url, "/movie", params),
-                getMedia(glob.api_url, "/tv", params),
+                getMedia(glob.api_search_url, "/movie", params),
+                getMedia(glob.api_search_url, "/tv", params),
             ])
                 .then(([resMovie, resSeries]) => {
                     setMovies(resMovie.data.results);
@@ -33,8 +33,8 @@ function SearchBar() {
             query: search ? search : "a",
         };
         Promise.all([
-            getMedia(glob.api_url, "/movie", params),
-            getMedia(glob.api_url, "/tv", params),
+            getMedia(glob.api_search_url, "/movie", params),
+            getMedia(glob.api_search_url, "/tv", params),
         ])
             .then(([resMovie, resSeries]) => {
                 setMovies(resMovie.data.results);
