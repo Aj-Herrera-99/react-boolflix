@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { api_img_url } from "../globals/globals";
 import { Link } from "react-router-dom";
+import Rating from "./Rating";
 
 function Card({ type, media }) {
     let {
@@ -14,17 +15,6 @@ function Card({ type, media }) {
         vote_average,
     } = { ...media };
     if (original_language == "en") original_language = "gb";
-
-    const rating = [];
-    for (let i = 1; i <= 5; i++) {
-        const star =
-            i <= Math.ceil(vote_average / 2) ? (
-                <i key={i} className="text-yellow-500 fa-solid fa-star"></i>
-            ) : (
-                <i key={i} className="text-yellow-500 fa-regular fa-star"></i>
-            );
-        rating.push(star);
-    }
 
     const imgSrc = `https://flagsapi.com/${original_language.toUpperCase()}/shiny/32.png`;
 
@@ -48,7 +38,7 @@ function Card({ type, media }) {
         <div className="py-4 ">
             <Link
                 to={`/search/${id}`}
-                state={{type}}
+                state={{ type }}
                 onMouseEnter={handleHover}
                 onMouseLeave={handleHover}
                 className="block mx-6 overflow-hidden border border-white rounded-md shadow-md cursor-pointer bounce-anim shadow-stone-800"
@@ -65,29 +55,29 @@ function Card({ type, media }) {
                     className="absolute top-0 bottom-0 z-30 flex-col justify-around hidden text-white bg-[#000000b5] rounded-md right-0 left-0 px-2"
                 >
                     <p>
-                        <strong className="text-xl font-bold capitalize">
+                        <strong className="text-xl font-bold capitalize md:text-lg lg:text-2xl">
                             Title:
                         </strong>{" "}
                         <br /> {type === "movie" ? title : name}
                     </p>
                     <p>
-                        <strong className="text-xl font-bold capitalize">
+                        <strong className="text-xl font-bold capitalize md:text-lg lg:text-2xl">
                             Original Title:
                         </strong>{" "}
                         <br />
                         {type === "movie" ? original_title : original_name}
                     </p>
                     <p>
-                        <strong className="text-xl font-bold capitalize">
+                        <strong className="text-xl font-bold capitalize md:text-lg lg:text-2xl">
                             Original Language:
                         </strong>{" "}
                         <br /> <img width={32} src={imgSrc}></img>
                     </p>
                     <div>
-                        <strong className="text-xl font-bold capitalize">
+                        <strong className="text-xl font-bold capitalize md:text-lg lg:text-2xl">
                             Rating: <br />{" "}
                         </strong>
-                        {rating}
+                        <Rating stars={Math.ceil(vote_average / 2)} />
                     </div>
                 </div>
             </Link>

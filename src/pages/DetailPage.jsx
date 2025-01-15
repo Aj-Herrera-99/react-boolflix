@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import { api_base_url, api_img_url, api_key } from "../globals/globals";
+import Rating from "../components/Rating";
 
 function DetailPage() {
     const { getMedia } = useGlobalContext();
@@ -38,12 +39,22 @@ function DetailPage() {
                     <img src={`${api_img_url}/w500${poster_path}`} alt="" />
                 </div>
 
-                <div className="max-w-[600px]">
-                    <h1 className="mb-8 font-light tracking-wide text-7xl">{type === "movie" ? title : name}</h1>
+                <div>
+                    <div className="flex items-center gap-12 [&>*]:w-1/2">
+                        <h1
+                            title={type === "movie" ? title : name}
+                            className="pb-8 text-6xl font-light tracking-wide line-clamp-2"
+                        >
+                            {type === "movie" ? title : name}
+                        </h1>
+                        <div className="flex gap-2 text-2xl">
+                            <Rating stars={Math.ceil(vote_average / 2)} />
+                        </div>
+                    </div>
                     <h2 className="text-3xl font-semibold tracking-wide">
                         Overview
                     </h2>
-                    <p>{overview}</p>
+                    <p className="max-w-[600px]">{overview}</p>
                 </div>
             </section>
         </>
