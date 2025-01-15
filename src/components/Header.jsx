@@ -2,9 +2,9 @@ import React from "react";
 import SearchBar from "./SearchBar";
 
 function Header() {
-    console.log("Header render");
+    // todo: fissare l'altezza di header con valori globali (occhio responsive)
     return (
-        <header className="flex items-center justify-between p-4 bg-black">
+        <header className="fixed top-0 z-10 flex items-center justify-between w-full p-4 bg-black ">
             <a
                 className="text-4xl font-bold tracking-wider text-red-700 uppercase"
                 href="/"

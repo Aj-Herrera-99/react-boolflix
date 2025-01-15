@@ -23,7 +23,7 @@ function Card({ style, type, media }) {
             case "mouseenter":
                 overlayRef.current.classList.add("!flex");
                 break;
-            case "mouseenter":
+            case "mouseleave":
                 overlayRef.current.classList.remove("!flex");
                 break;
             default:
@@ -33,12 +33,14 @@ function Card({ style, type, media }) {
 
     return (
         <div
-            onMouseEnter={handleHover}
-            onMouseLeave={handleHover}
             style={style}
-            className={` w-[275px] h-[375px] slider-child px-2 cursor-pointer`}
+            className={` w-[275px] h-[375px] slider-child cursor-pointer`}
         >
-            <div className="h-full bounce-anim">
+            <div
+                onMouseEnter={handleHover}
+                onMouseLeave={handleHover}
+                className="h-full px-2 bounce-anim"
+            >
                 <div className="h-full">
                     <img
                         className="object-cover w-full h-full rounded-md"
@@ -48,10 +50,12 @@ function Card({ style, type, media }) {
                 </div>
                 <div
                     ref={overlayRef}
-                    className="absolute top-0 bottom-0 z-30 flex-col justify-around hidden text-white bg-[#000000b5] rounded-md right-0 left-0 px-2 border border-white"
+                    className="absolute top-0 bottom-0 z-30 flex-col justify-around hidden text-white bg-[#000000b5] rounded-md right-2 left-2 px-2 border-2 border-white"
                 >
                     <p>
-                        <span className="text-xl font-bold capitalize">Title:</span>{" "}
+                        <span className="text-xl font-bold capitalize">
+                            Title:
+                        </span>{" "}
                         <br /> {type === "movie" ? title : name}
                     </p>
                     <p>

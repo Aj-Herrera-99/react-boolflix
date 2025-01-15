@@ -5,7 +5,6 @@ import { getMedia } from "../utils/utils";
 
 function SearchBar() {
     const { search, setSearch, setMovies, setSeries } = useGlobalContext();
-    console.log("SearchBar render");
 
     // actions
     const handleInputChange = (e) => {
@@ -52,7 +51,10 @@ function SearchBar() {
                 placeholder="Search a title"
                 value={search}
             />
-            <button className="px-3 py-1 ml-2 bg-red-700 rounded-md" type="submit">
+            <button
+                className="px-3 py-1 ml-2 bg-red-700 rounded-md"
+                type="submit"
+            >
                 <span>
                     <i className="text-white fa-solid fa-magnifying-glass"></i>
                 </span>

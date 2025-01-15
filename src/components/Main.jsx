@@ -3,13 +3,15 @@ import { useGlobalContext } from "../contexts/GlobalContext";
 import Card from "./Card";
 
 function Main() {
-    console.log("Main render");
-
     const { movies, series } = useGlobalContext();
 
     return (
-        <main className="bg-[#434343] grow pb-12">
-            <MediaSection title="Movies" media={movies}>
+        <main
+            style={{ height: `calc(100vh - 72px)` }}
+            className="bg-[#434343] pb-12 mt-[72px] overflow-auto
+        "
+        >
+            <MediaSection title="popular movies" media={movies}>
                 {movies.map((movie, index) => (
                     <Card
                         key={movie.id}
@@ -19,7 +21,7 @@ function Main() {
                     ></Card>
                 ))}
             </MediaSection>
-            <MediaSection title="Series" media={series}>
+            <MediaSection title="popular series" media={series}>
                 {series.map((serie, index) => (
                     <Card
                         style={{ ["--position"]: index + 1 }}
@@ -36,7 +38,9 @@ function Main() {
 function MediaSection({ title, media, children }) {
     return (
         <>
-            <h2 className="p-4 text-2xl text-white">{title}</h2>
+            <h2 className="p-4 text-4xl font-light tracking-wide text-white capitalize">
+                {title}
+            </h2>
             <section className="w-full pt-3 overflow-x-hidden">
                 <div
                     style={{ ["--quantity"]: media.length }}

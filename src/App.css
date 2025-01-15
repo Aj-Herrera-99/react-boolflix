@@ -1,9 +1,3 @@
-#root {
-    display: flex;
-    flex-direction: column;
-    min-height: 100dvh;
-}
-
 .loader {
     width: 48px;
     height: 48px;
@@ -23,7 +17,6 @@
         transform: rotate(360deg);
     }
 }
-
 
 /* slider-parent ha una proprietà --quantity = conteggio dei children */
 .slider-child {
@@ -60,18 +53,17 @@
 }
 
 /** seleziona tutti i siblings successivi al sibling in hover */
-.slider-child:hover~.slider-child {
+.slider-child:hover ~ .slider-child {
     animation-play-state: paused;
-    color:#000000d5
+    color: #000000d5;
 }
 
-/* ogni card ha un div wrapper figlio anim che permette all'hover su di essa un'altra animazione senza sovrascrivere slider */
+/* ogni card ha un div wrapper figlio anim che permette, all'hover su di essa, un'altra animazione senza sovrascrivere slider */
 .bounce-anim:hover {
     animation: bounce 2.5s ease-out infinite;
 }
 
 @keyframes bounce {
-
     0%,
     50%,
     100% {
@@ -82,5 +74,4 @@
     75% {
         transform: translateY(-5px);
     }
-
 }

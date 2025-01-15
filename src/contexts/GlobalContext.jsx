@@ -9,12 +9,12 @@ const GlobalContextProvider = ({ children }) => {
     const [series, setSeries] = useState([]);
     const [search, setSearch] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const params = {
-        api_key: glob.api_key,
-        query: "a",
-    };
-    
+
     useEffect(() => {
+        const params = {
+            api_key: glob.api_key,
+            query: "a",
+        };
         Promise.all([
             getMedia(glob.api_url, "/movie", params),
             getMedia(glob.api_url, "/tv", params),
