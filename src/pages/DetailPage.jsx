@@ -69,7 +69,7 @@ function DetailPage() {
                     <section className="relative flex flex-col items-center justify-between py-8 gap-y-12 lg:flex-row">
                         <div className="lg:w-[40vw]">
                             <img
-                                className="w-[350px] mx-auto border border-white rounded-md "
+                                className="w-[60vw] sm:w-[350px] mx-auto border border-white rounded-md "
                                 src={`${api_img_url}/w500${poster_path}`}
                                 alt=""
                             />

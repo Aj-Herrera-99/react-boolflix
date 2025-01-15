@@ -1,6 +1,5 @@
 import React from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
-import Slider from "@ant-design/react-slick";
 import Card from "../components/Card";
 
 function SearchMedia() {
@@ -21,14 +20,17 @@ function SearchMedia() {
     );
 }
 
+// todo: componenti CardsSection, CardsContainer
 function CardsContainer({ title, children }) {
     return (
         <>
-            <h2 className="p-4 text-4xl font-light tracking-wide text-white capitalize">
-                {title}
-            </h2>
-            <section className="px-16">
-                <div className="grid grid-cols-1 auto-rows-fr sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">{children}</div>
+            <section className="lg:max-w-[87vw] xl:max-w-[90vw] mx-auto py-8">
+                <h2 className="p-4 text-4xl font-light tracking-wide capitalize">
+                    {title}
+                </h2>
+                <div className="grid grid-cols-1 auto-rows-fr sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                    {children}
+                </div>
             </section>
         </>
     );

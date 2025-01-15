@@ -12,11 +12,11 @@ function Header() {
     };
 
     return (
-        <header className="fixed top-0 z-10 flex items-center justify-between w-full p-4 bg-black shadow-md shadow-stone-500">
+        <header className="fixed top-0 z-10 flex items-center justify-between w-full p-4 bg-black shadow-lg shadow-stone-800">
             <Link
                 onClick={handleLinkClick}
                 to={"/"}
-                className="text-4xl font-bold tracking-wider text-red-700 uppercase"
+                className="text-5xl font-semibold tracking-wide text-red-700 uppercase"
             >
                 Boolflix
             </Link>
