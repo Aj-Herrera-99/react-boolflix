@@ -43,22 +43,22 @@ function Card({ style, type, media }) {
     };
 
     return (
-        <div style={style} className={` w-[275px] h-[375px] slider-child`}>
+        <div className="py-4">
             <div
                 onMouseEnter={handleHover}
                 onMouseLeave={handleHover}
-                className="h-full px-2 cursor-pointer bounce-anim"
+                className="w-[275px] h-[375px] mx-4 cursor-pointer  bounce-anim"
             >
-                <div className="h-full">
+                <div className="w-full h-full">
                     <img
-                        className="object-cover w-full h-full rounded-md"
+                        className="object-cover w-full h-full overflow-hidden rounded-md"
                         src={`${api_img_url}/w342${poster_path}`}
                         alt={type === "movie" ? title : name}
                     />
                 </div>
                 <div
                     ref={overlayRef}
-                    className="absolute top-0 bottom-0 z-30 flex-col justify-around hidden text-white bg-[#000000b5] rounded-md right-2 left-2 px-2 border-2 border-white"
+                    className="absolute top-0 bottom-0 z-30 flex-col justify-around hidden text-white bg-[#000000b5] rounded-md right-0 left-0 px-2 border-2 border-white"
                 >
                     <p>
                         <strong className="text-xl font-bold capitalize">

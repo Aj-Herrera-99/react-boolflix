@@ -12,3 +12,10 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
+body {
+    background-color: #434343;
+    padding-top: 72px;
+    display: flex;
+    height: 100vh;
+}

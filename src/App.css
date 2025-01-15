@@ -1,3 +1,7 @@
+#root {
+    flex-grow: 1;
+}
+
 .loader {
     width: 48px;
     height: 48px;
