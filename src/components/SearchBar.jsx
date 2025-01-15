@@ -4,7 +4,7 @@ import * as glob from "../globals/globals";
 import { useNavigate } from "react-router-dom";
 
 function SearchBar() {
-    const { search, setSearch, setMovies, setSeries, getMedia } =
+    const { search, setSearch, setMovies, setSeries, getMedia, setIsLoading } =
         useGlobalContext();
 
     const [isShown, setIsShown] = useState(false);
@@ -35,6 +35,7 @@ function SearchBar() {
     const handleSearchSubmit = (e) => {
         e.preventDefault();
         if (search) {
+            setIsLoading(true);
             const params = {
                 api_key: glob.api_key,
                 query: search ? search : "a",
@@ -50,7 +51,8 @@ function SearchBar() {
                     setSearch("");
                     navigate("/search");
                 })
-                .catch((err) => console.error(err));
+                .catch((err) => console.error(err))
+                .finally(() => setIsLoading(false));
         }
     };
 

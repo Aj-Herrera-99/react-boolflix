@@ -4,10 +4,10 @@ import Slider from "@ant-design/react-slick";
 import Card from "../components/Card";
 
 function Homepage() {
-    const { movies, series } = useGlobalContext();
+    const { movies, series, isLoading } = useGlobalContext();
     return (
         <>
-            <MediaSection title="trending movies">
+            <MediaSection title="trending movies" isLoading={isLoading}>
                 {movies.map((movie) => (
                     <Card key={movie.id} type="movie" media={movie}></Card>
                 ))}
@@ -21,7 +21,7 @@ function Homepage() {
     );
 }
 
-function MediaSection({ title, children }) {
+function MediaSection({ title, children, isLoading }) {
     const settings = {
         infinite: true,
         slidesToShow: 5,
@@ -58,14 +58,14 @@ function MediaSection({ title, children }) {
     };
 
     return (
-        <>
-            <section className="lg:max-w-[87vw] xl:max-w-[90vw] mx-auto py-8">
+        <section className="lg:max-w-[87vw] xl:max-w-[90vw] mx-auto py-8">
             <h2 className="p-4 text-4xl font-light tracking-wide text-white capitalize">
                 {title}
             </h2>
-                <Slider {...settings} swipe={true}>{children}</Slider>
-            </section>
-        </>
+            <Slider {...settings} swipe={true}>
+                {children}
+            </Slider>
+        </section>
     );
 }
 

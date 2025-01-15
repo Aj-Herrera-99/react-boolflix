@@ -16,6 +16,7 @@ const GlobalContextProvider = ({ children }) => {
     }
 
     useEffect(() => {
+        setIsLoading(true);
         const params = {
             api_key: glob.api_key,
             language: "en-US",
@@ -28,7 +29,8 @@ const GlobalContextProvider = ({ children }) => {
                 setMovies(resMovie.data.results);
                 setSeries(resSeries.data.results);
             })
-            .catch((err) => console.error(err));
+            .catch((err) => console.error(err))
+            .finally(() => setIsLoading(false));
     }, [isHomePage]);
 
     return (
@@ -43,7 +45,7 @@ const GlobalContextProvider = ({ children }) => {
                 isLoading,
                 setIsLoading,
                 getMedia,
-                setIsHomepage
+                setIsHomepage,
             }}
         >
             {children}

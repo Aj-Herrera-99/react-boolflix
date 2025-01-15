@@ -1,5 +1,6 @@
-#root {
-    overflow-x: hidden;
+#root{
+    padding-top: 72px;
+    height: 100vh;
 }
 
 .loader {

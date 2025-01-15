@@ -5,7 +5,7 @@ import { api_base_url, api_img_url, api_key } from "../globals/globals";
 import Rating from "../components/Rating";
 
 function DetailPage() {
-    const { getMedia } = useGlobalContext();
+    const { getMedia, setIsLoading } = useGlobalContext();
     const { id } = useParams();
     const location = useLocation();
     const type = location.state.type;
@@ -13,18 +13,10 @@ function DetailPage() {
     const [media, setMedia] = useState({});
     const [cast, setCast] = useState([]);
 
-    let {
-        title,
-        original_title,
-        name,
-        original_name,
-        original_language,
-        poster_path,
-        vote_average,
-        overview,
-    } = { ...media };
+    let { title, name, poster_path, vote_average, overview } = { ...media };
 
     useEffect(() => {
+        setIsLoading(true);
         const endpoint = type === "movie" ? "/movie" : "/tv";
         Promise.all([
             getMedia(api_base_url, `${endpoint}/${id}`, {
@@ -38,7 +30,8 @@ function DetailPage() {
                 setMedia(resMedia.data);
                 setCast(resCast.data.cast);
             })
-            .catch((err) => console.error(err));
+            .catch((err) => console.error(err))
+            .finally(() => setIsLoading(false));
     }, []);
     return (
         <>
