@@ -1,3 +1,9 @@
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+}
+
 .loader {
     width: 48px;
     height: 48px;
@@ -15,5 +21,31 @@
     }
     100% {
         transform: rotate(360deg);
+    }
+}
+
+
+/* slider-parent ha una proprietà --quantity = conteggio dei children */
+.slider-child {
+    --duration: 180s;
+    animation: slider var(--duration) linear infinite;
+    animation-delay: calc(
+        (var(--duration) / var(--quantity)) *
+            (var(--position) - var(--quantity))
+    );
+    /*! delay-box1 < delay-box2 < . . . < delay-last-box = 0 */
+    /*  NB: il primo box dunque partira molto prima (delay < 0) rispetto all'esecuzione dell animazione mentre l ultimo box partira al partire dell'esecuzione (delay = 0), linearità garantita   */
+}
+/* setting iniziale: from tutto a destra fuori dal container -> to tutto a sinistra fuori dal container  */
+@keyframes slider {
+    from {
+        translate: calc(100% * (var(--quantity) - (var(--position) - 1)));
+        /* sposto a dx quanto? quanto la dimensione massima del box (100%) per un certo offset dato dal numero tot di box e la sua posizione; fino a spingere i box (TUTTE UNO
+    SOVRAPPOSTO ALL'ALTRO) sul bordo esterno destro del container padre */
+    }
+    to {
+        translate: calc(-100% * var(--position));
+        /** sposto a sx quanto? quanto la dimensione massima del box per un certo offset dato dalla sua posizione*/
+        /* NB: questo sarà dunque un valore negativo -> spingo i box (TUTTE UNO SOVRAPPOSTO ALL'ALTRO) sul bordo esterno sinistro del container padre*/
     }
 }

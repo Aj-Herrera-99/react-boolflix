@@ -1,7 +1,7 @@
 import React from "react";
 import { api_img_url } from "../globals/globals";
 
-function Card({ type, media }) {
+function Card({ style, type, media }) {
     let {
         title,
         original_title,
@@ -16,12 +16,15 @@ function Card({ type, media }) {
     const totalRating = Array.from({ length: 5 - rating.length });
 
     return (
-        <div className="bg-blue-600 ">
-            <img
-                src={`${api_img_url}/w185${poster_path}`}
-                alt={type === "movie" ? title : name}
-            />
-            <p>Title: {type === "movie" ? title : name}</p>
+        <div style={style} className="w-[20vw] slider-child px-2">
+            <div className="w-full h-full">
+                <img
+                    className="object-cover w-full h-full"
+                    src={`${api_img_url}/w342${poster_path}`}
+                    alt={type === "movie" ? title : name}
+                />
+            </div>
+            {/* <p>Title: {type === "movie" ? title : name}</p>
             <p>
                 Original Title:{" "}
                 {type === "movie" ? original_title : original_name}
@@ -47,7 +50,7 @@ function Card({ type, media }) {
                         className="text-yellow-500 fa-regular fa-star"
                     ></i>
                 ))}
-            </div>
+            </div> */}
         </div>
     );
 }

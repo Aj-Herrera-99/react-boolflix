@@ -54,7 +54,7 @@ function SearchBar() {
             />
             <button className="px-3 py-1 ml-2 bg-red-700 rounded-md" type="submit">
                 <span>
-                    <i class="fa-solid fa-magnifying-glass text-white"></i>
+                    <i className="text-white fa-solid fa-magnifying-glass"></i>
                 </span>
             </button>
         </form>
