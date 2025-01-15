@@ -37,7 +37,7 @@ function MediaSection({ title, media, children }) {
     return (
         <>
             <h2 className="p-4 text-2xl text-white">{title}</h2>
-            <section className="w-full my-2 overflow-hidden">
+            <section className="w-full overflow-hidden">
                 <div
                     style={{ ["--quantity"]: media.length }}
                     className="flex w-fit"
