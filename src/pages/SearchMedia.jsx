@@ -27,8 +27,8 @@ function CardsContainer({ title, children }) {
             <h2 className="p-4 text-4xl font-light tracking-wide text-white capitalize">
                 {title}
             </h2>
-            <section className="max-w-[78vw] sm:max-w-[88vw] xl:max-w-[92vw] mx-auto">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">{children}</div>
+            <section className="px-16">
+                <div className="grid grid-cols-1 auto-rows-fr sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">{children}</div>
             </section>
         </>
     );

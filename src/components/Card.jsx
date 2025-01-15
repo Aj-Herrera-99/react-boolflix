@@ -44,9 +44,9 @@ function Card({ type, media }) {
                 onMouseLeave={handleHover}
                 className="block mx-6 overflow-hidden border border-white rounded-md shadow-md cursor-pointer bounce-anim shadow-stone-800"
             >
-                <div>
+                <div className=" thumb-container">
                     <img
-                        className="object-cover w-full"
+                    className="object-cover w-full h-full"
                         src={`${api_img_url}/w342${poster_path}`}
                         alt={type === "movie" ? title : name}
                     />

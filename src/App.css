@@ -1,6 +1,6 @@
 #root {
     padding-top: 72px;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .loader {
@@ -114,4 +114,8 @@
 }
 .slick-arrow.slick-next {
     translate: 20px;
+}
+
+.thumb-container{
+    aspect-ratio: 4/6;
 }

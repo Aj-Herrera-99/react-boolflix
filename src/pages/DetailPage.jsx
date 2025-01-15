@@ -58,6 +58,11 @@ function DetailPage() {
                             <iframe
                                 className="absolute top-0 left-0 w-full h-full -z-10 iframe"
                                 src={`https://www.youtube.com/embed/${videoPath}?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1&loop=1`}
+                                title={type === "movie" ? title : name}
+                                frameborder="0"
+                                allow="fullscreen; accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerpolicy="strict-origin-when-cross-origin"
+                                allowfullscreen="allowfullscreen"
                             ></iframe>
                         </div>
                     )}

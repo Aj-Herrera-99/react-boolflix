@@ -10,13 +10,8 @@ function DefaultLayout() {
     return (
         <>
             <Header />
-            {isLoading ? (
-                <Loader />
-            ) : (
-                <Main>
-                    <Outlet />
-                </Main>
-            )}
+
+            <Main>{isLoading ? <Loader /> : <Outlet />}</Main>
         </>
     );
 }
