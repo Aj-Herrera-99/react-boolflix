@@ -1,17 +1,41 @@
 import React from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import * as glob from "../globals/globals";
+import { useNavigate } from "react-router-dom";
 
 function SearchBar() {
     const { search, setSearch, setMovies, setSeries, getMedia } =
         useGlobalContext();
 
+    const navigate = useNavigate();
+
     // actions
     const handleInputChange = (e) => {
-        if (e.target.value === "") {
+        // * alla cancellazione dell'input mi fa il fetch dei media con query="a"
+        // if (e.target.value === "") {
+        //     const params = {
+        //         api_key: glob.api_key,
+        //         query: "a",
+        //     };
+        //     Promise.all([
+        //         getMedia(glob.api_search_url, "/movie", params),
+        //         getMedia(glob.api_search_url, "/tv", params),
+        //     ])
+        //         .then(([resMovie, resSeries]) => {
+        //             setMovies(resMovie.data.results);
+        //             setSeries(resSeries.data.results);
+        //         })
+        //         .catch((err) => console.error(err));
+        // }
+        setSearch(e.target.value);
+    };
+
+    const handleSearchSubmit = (e) => {
+        e.preventDefault();
+        if (search) {
             const params = {
                 api_key: glob.api_key,
-                query: "a",
+                query: search ? search : "a",
             };
             Promise.all([
                 getMedia(glob.api_search_url, "/movie", params),
@@ -20,27 +44,10 @@ function SearchBar() {
                 .then(([resMovie, resSeries]) => {
                     setMovies(resMovie.data.results);
                     setSeries(resSeries.data.results);
+                    navigate("/search");
                 })
                 .catch((err) => console.error(err));
         }
-        setSearch(e.target.value);
-    };
-
-    const handleSearchSubmit = (e) => {
-        e.preventDefault();
-        const params = {
-            api_key: glob.api_key,
-            query: search ? search : "a",
-        };
-        Promise.all([
-            getMedia(glob.api_search_url, "/movie", params),
-            getMedia(glob.api_search_url, "/tv", params),
-        ])
-            .then(([resMovie, resSeries]) => {
-                setMovies(resMovie.data.results);
-                setSeries(resSeries.data.results);
-            })
-            .catch((err) => console.error(err));
     };
     return (
         <form onSubmit={handleSearchSubmit}>

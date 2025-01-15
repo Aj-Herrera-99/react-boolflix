@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { api_img_url } from "../globals/globals";
 
-function Card({ style, type, media }) {
+function Card({ type, media }) {
     let {
         title,
         original_title,
@@ -49,9 +49,9 @@ function Card({ style, type, media }) {
                 onMouseLeave={handleHover}
                 className="mx-4 cursor-pointer bounce-anim"
             >
-                <div className="w-full h-full">
+                <div>
                     <img
-                        className="object-cover w-full h-full overflow-hidden rounded-md"
+                        className="overflow-hidden rounded-md"
                         src={`${api_img_url}/w342${poster_path}`}
                         alt={type === "movie" ? title : name}
                     />

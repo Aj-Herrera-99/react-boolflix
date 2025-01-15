@@ -9,6 +9,7 @@ const GlobalContextProvider = ({ children }) => {
     const [series, setSeries] = useState([]);
     const [search, setSearch] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [isHomePage, setIsHomepage] = useState(false);
 
     async function getMedia(baseURL, endpoint, params) {
         return await axios.get(`${baseURL}${endpoint}`, { params });
@@ -28,7 +29,7 @@ const GlobalContextProvider = ({ children }) => {
                 setSeries(resSeries.data.results);
             })
             .catch((err) => console.error(err));
-    }, []);
+    }, [isHomePage]);
 
     return (
         <GlobalContext.Provider
@@ -42,6 +43,7 @@ const GlobalContextProvider = ({ children }) => {
                 isLoading,
                 setIsLoading,
                 getMedia,
+                setIsHomepage
             }}
         >
             {children}

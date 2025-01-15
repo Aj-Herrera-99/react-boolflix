@@ -1,16 +1,25 @@
 import "./App.css";
-import Header from "./components/Header";
-import Main from "./components/Main";
 import { GlobalContextProvider } from "./contexts/GlobalContext";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import DefaultLayout from "./pages/DefaultLayout";
+import Homepage from "./pages/Homepage";
+import SearchMedia from "./pages/SearchMedia";
 
 function App() {
     return (
-        <GlobalContextProvider>
-            <Header />
-            <Main />
-        </GlobalContextProvider>
+        <BrowserRouter>
+            <GlobalContextProvider>
+                <Routes>
+                    <Route Component={DefaultLayout}>
+                        <Route index Component={Homepage}></Route>
+                        <Route path="/search" Component={SearchMedia}></Route>
+                    </Route>
+                </Routes>
+            </GlobalContextProvider>
+        </BrowserRouter>
     );
 }
 
