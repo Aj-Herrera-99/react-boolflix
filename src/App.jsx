@@ -11,8 +11,8 @@ import DetailPage from "./pages/DetailPage";
 
 function App() {
     return (
-        <HashRouter>
-            <GlobalContextProvider>
+        <GlobalContextProvider>
+            <HashRouter>
                 <Routes>
                     <Route Component={DefaultLayout}>
                         <Route index Component={Homepage}></Route>
@@ -23,8 +23,8 @@ function App() {
                         ></Route>
                     </Route>
                 </Routes>
-            </GlobalContextProvider>
-        </HashRouter>
+            </HashRouter>
+        </GlobalContextProvider>
     );
 }
 

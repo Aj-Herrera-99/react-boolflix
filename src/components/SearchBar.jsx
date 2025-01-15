@@ -34,8 +34,8 @@ function SearchBar() {
 
     const handleSearchSubmit = (e) => {
         e.preventDefault();
+        setIsLoading(true);
         if (search) {
-            setIsLoading(true);
             const params = {
                 api_key: api_key,
                 query: search ? search : "a",

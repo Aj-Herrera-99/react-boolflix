@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Rating from "./Rating";
 
 function Card({ type, media }) {
+
     let {
         id,
         title,
@@ -35,7 +36,7 @@ function Card({ type, media }) {
     };
 
     return (
-        <div className="py-4 " draggable={false}>
+        <div className="py-4 ">
             <Link
                 to={`/search/${id}`}
                 state={{ type }}
