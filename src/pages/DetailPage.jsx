@@ -5,12 +5,15 @@ import { api_base_url, api_img_url, api_key } from "../globals/globals";
 import Rating from "../components/Rating";
 import Loader from "../components/Loader";
 import { getRndInteger } from "../utils/utils";
+import FrameClip from "../components/FrameClip";
 
 function DetailPage() {
     const { getMedia } = useGlobalContext();
     const { id } = useParams();
     const location = useLocation();
-    const type = location.state.type;
+    const type = location.state?.type;
+
+    if (!type) return null;
 
     const [isLoading, setIsLoading] = useState(false);
     const [media, setMedia] = useState({});
@@ -54,24 +57,17 @@ function DetailPage() {
             ) : (
                 <>
                     {videoPath && (
-                        <div className="absolute w-full h-full bg-[#00000090]">
-                            <iframe
-                                className="absolute top-0 left-0 w-full h-full -z-10 iframe"
-                                src={`https://www.youtube.com/embed/${videoPath}?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1&loop=1`}
-                                title={type === "movie" ? title : name}
-                                frameborder="0"
-                                allow="fullscreen; accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                referrerpolicy="strict-origin-when-cross-origin"
-                                allowfullscreen="allowfullscreen"
-                            ></iframe>
-                        </div>
+                        <FrameClip
+                            src={`https://www.youtube.com/embed/${videoPath}?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1&loop=1`}
+                            title={type === "movie" ? title : name}
+                        />
                     )}
                     <section className="relative flex flex-col items-center justify-between py-8 gap-y-12 lg:flex-row">
                         <div className="lg:w-[40vw]">
                             <img
                                 className="w-[60vw] sm:w-[350px] mx-auto border border-white rounded-md "
                                 src={`${api_img_url}/w500${poster_path}`}
-                                alt=""
+                                alt={type === "movie" ? title : name}
                             />
                         </div>
 

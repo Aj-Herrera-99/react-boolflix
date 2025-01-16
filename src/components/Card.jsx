@@ -36,7 +36,7 @@ function Card({ type, media }) {
     };
 
     return (
-        <div className="py-4 ">
+        <div className="py-4">
             <Link
                 to={`/search/${id}`}
                 state={{ type }}
