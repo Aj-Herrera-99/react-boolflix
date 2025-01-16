@@ -28,7 +28,7 @@ function CardsContainer({ title, children }) {
                 <h2 className="p-4 text-4xl font-light tracking-wide capitalize">
                     {title}
                 </h2>
-                <div className="grid grid-cols-1 auto-rows-fr sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                     {children}
                 </div>
             </section>

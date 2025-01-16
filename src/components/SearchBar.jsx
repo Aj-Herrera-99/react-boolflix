@@ -4,8 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { api_key, api_search_url } from "../globals/globals";
 
 function SearchBar() {
-    const { setMovies, setSeries, getMedia, setIsLoading } =
-        useGlobalContext();
+    const { setMovies, setSeries, getMedia, setIsLoading } = useGlobalContext();
 
     const [isShown, setIsShown] = useState(false);
 
@@ -13,11 +12,12 @@ function SearchBar() {
 
     const navigate = useNavigate();
 
-
     const handleSearchSubmit = (e) => {
         e.preventDefault();
-        setIsLoading(true);
-        if (inputRef.current?.value) {
+        if (inputRef.current) {
+            const { value } = inputRef.current;
+            if (!value) return;
+            setIsLoading(true);
             const params = {
                 api_key: api_key,
                 query: inputRef.current.value,
@@ -38,7 +38,6 @@ function SearchBar() {
     };
 
     // mobile
-
     const showSearchBar = () => {
         setIsShown(true);
     };

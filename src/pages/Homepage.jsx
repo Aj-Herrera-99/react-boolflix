@@ -1,6 +1,8 @@
 import React from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import Slider from "@ant-design/react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import Card from "../components/Card";
 
 function Homepage() {
@@ -21,7 +23,7 @@ function Homepage() {
     );
 }
 
-function MediaSection({ title, children, isLoading }) {
+function MediaSection({ title, children }) {
     const settings = {
         infinite: true,
         slidesToShow: 4,

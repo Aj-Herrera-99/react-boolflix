@@ -4,11 +4,10 @@ import { Link } from "react-router-dom";
 import { useGlobalContext } from "../contexts/GlobalContext";
 
 function Header() {
-    const { setIsHomepage, setSearch } = useGlobalContext();
+    const { setIsHomepage } = useGlobalContext();
 
     const handleLinkClick = () => {
         setIsHomepage((curr) => !curr);
-        setSearch("");
     };
 
     return (
