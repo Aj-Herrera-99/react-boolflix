@@ -10,10 +10,6 @@ const GlobalContextProvider = ({ children }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [isHomePage, setIsHomepage] = useState(false);
 
-    async function getMedia(baseURL, endpoint, params) {
-        return await axios.get(`${baseURL}${endpoint}`, { params });
-    }
-
     useEffect(() => {
         setIsLoading(true);
         const params = {
@@ -21,8 +17,8 @@ const GlobalContextProvider = ({ children }) => {
             language: "en-US",
         };
         Promise.all([
-            getMedia(api_trending_url, "/movie/week", params),
-            getMedia(api_trending_url, "/tv/week", params),
+            axios.get(`${api_trending_url}/movie/week`, {params}),
+            axios.get(`${api_trending_url}/tv/week`, {params}),
         ])
             .then(([resMovie, resSeries]) => {
                 setMovies(resMovie.data.results);
@@ -41,7 +37,6 @@ const GlobalContextProvider = ({ children }) => {
                 setSeries,
                 isLoading,
                 setIsLoading,
-                getMedia,
                 setIsHomepage,
             }}
         >

@@ -6,6 +6,7 @@ import DefaultLayout from "./pages/DefaultLayout";
 import Homepage from "./pages/Homepage";
 import SearchMedia from "./pages/SearchMedia";
 import DetailPage from "./pages/DetailPage";
+import NotFound from "./pages/NotFound";
 
 function App() {
     return (
@@ -19,6 +20,7 @@ function App() {
                             path="/search/:id"
                             Component={DetailPage}
                         ></Route>
+                        <Route path="*" element={<NotFound></NotFound>}></Route>
                     </Route>
                 </Routes>
             </BrowserRouter>

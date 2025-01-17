@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import Rating from "./Rating";
 
 function Card({ type, media }) {
-
     let {
         id,
         title,
@@ -46,7 +45,7 @@ function Card({ type, media }) {
             >
                 <div className=" thumb-container">
                     <img
-                    className="object-cover w-full h-full"
+                        className="object-cover w-full h-full"
                         src={`${api_img_url}/w342${poster_path}`}
                         alt={type === "movie" ? title : name}
                     />

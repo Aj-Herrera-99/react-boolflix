@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import { useGlobalContext } from "../contexts/GlobalContext";
 import { api_base_url, api_img_url, api_key } from "../globals/globals";
 import Rating from "../components/Rating";
 import Loader from "../components/Loader";
 import { getRndInteger } from "../utils/utils";
 import FrameClip from "../components/FrameClip";
+import axios from "axios";
+import NotFound from "./NotFound";
 
 function DetailPage() {
-    const { getMedia } = useGlobalContext();
     const { id } = useParams();
+    console.log(id);
     const location = useLocation();
     const type = location.state?.type;
 
-    if (!type) return null;
+    if (!type) return <NotFound></NotFound>;
 
     const [isLoading, setIsLoading] = useState(false);
     const [media, setMedia] = useState({});
@@ -28,27 +29,17 @@ function DetailPage() {
     }
 
     useEffect(() => {
-        (async () => {
-            setIsLoading(true);
-            const endpoint = type === "movie" ? "/movie" : "/tv";
-            const params = {
-                api_key,
-                append_to_response: "credits,videos",
-            };
-            try {
-                const res = await getMedia(
-                    api_base_url,
-                    `${endpoint}/${id}`,
-                    params
-                );
-                if (!res) throw new Error("Request error");
-                setMedia(res.data);
-            } catch (e) {
-                console.error(e);
-            } finally {
-                setIsLoading(false);
-            }
-        })();
+        setIsLoading(true);
+        const endpoint = type === "movie" ? "/movie" : "/tv";
+        const params = {
+            api_key,
+            append_to_response: "credits,videos",
+        };
+        axios
+            .get(`${api_base_url}${endpoint}/${id}`, { params })
+            .then((res) => setMedia(res.data))
+            .catch((e) => console.error(e))
+            .finally(() => setIsLoading(false));
     }, []);
     return (
         <>

@@ -2,9 +2,10 @@ import React, { useRef, useState } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import { useNavigate } from "react-router-dom";
 import { api_key, api_search_url } from "../globals/globals";
+import axios from "axios";
 
 function SearchBar() {
-    const { setMovies, setSeries, getMedia, setIsLoading } = useGlobalContext();
+    const { setMovies, setSeries, setIsLoading } = useGlobalContext();
 
     const [isShown, setIsShown] = useState(false);
 
@@ -23,17 +24,19 @@ function SearchBar() {
                 query: inputRef.current.value,
             };
             Promise.all([
-                getMedia(api_search_url, "/movie", params),
-                getMedia(api_search_url, "/tv", params),
+                axios.get(`${api_search_url}/movie`, { params }),
+                axios.get(`${api_search_url}/tv`, { params }),
             ])
                 .then(([resMovie, resSeries]) => {
                     setMovies(resMovie.data.results);
                     setSeries(resSeries.data.results);
-                    setIsShown(false);
-                    navigate("/search");
+                    navigate(`/search?q=${encodeURIComponent(params.query)}`);
                 })
                 .catch((err) => console.error(err))
-                .finally(() => setIsLoading(false));
+                .finally(() => {
+                    setIsShown(false);
+                    setIsLoading(false);
+                });
         }
     };
 

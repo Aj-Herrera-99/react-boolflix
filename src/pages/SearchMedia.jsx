@@ -1,9 +1,13 @@
 import React from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import Card from "../components/Card";
+import { useSearchParams } from "react-router-dom";
 
 function SearchMedia() {
     const { movies, series } = useGlobalContext();
+    const [searchParams] = useSearchParams();
+    
+    if(!searchParams.get("q")) return <div className="m-8 text-5xl font-light tracking-wide">Find A Movie or TV Show!</div>
     return (
         <>
             <CardsContainer title="movies">
