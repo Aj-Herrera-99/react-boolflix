@@ -1,13 +1,50 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import Card from "../components/Card";
 import { useSearchParams } from "react-router-dom";
+import CardsSection from "../components/CardsSection";
+import { api_key, api_search_url } from "../globals/globals";
+import axios from "axios";
+import Loader from "../components/Loader";
 
 function SearchMedia() {
-    const { movies, series } = useGlobalContext();
+    const { movies, series, setMovies, setSeries } = useGlobalContext();
     const [searchParams] = useSearchParams();
-    
-    if(!searchParams.get("q")) return <div className="m-8 text-5xl font-light tracking-wide">Find A Movie or TV Show!</div>
+    const [isLoading, setIsLoading] = useState(false);
+    const query = searchParams.get("q");
+
+    useEffect(() => {
+        if (query) {
+            setIsLoading(true);
+            const params = {
+                api_key,
+                query,
+            };
+
+            Promise.all([
+                axios.get(`${api_search_url}/movie`, { params }),
+                axios.get(`${api_search_url}/tv`, { params }),
+            ])
+                .then(([resMovie, resSeries]) => {
+                    setMovies(resMovie.data.results);
+                    setSeries(resSeries.data.results);
+                })
+                .catch((err) => console.error(err))
+                .finally(() => {
+                    setIsLoading(false);
+                });
+        }
+    }, [searchParams]);
+
+    if (!query)
+        return (
+            <div className="m-8 text-5xl font-light tracking-wide">
+                Find A Movie or TV Show!
+            </div>
+        );
+
+    if (isLoading) return <Loader />;
+
     return (
         <>
             <CardsContainer title="movies">
@@ -24,18 +61,14 @@ function SearchMedia() {
     );
 }
 
-// todo: componenti CardsSection, CardsContainer
 function CardsContainer({ title, children }) {
     return (
         <>
-            <section className="lg:max-w-[87vw] xl:max-w-[90vw] mx-auto py-8">
-                <h2 className="p-4 text-4xl font-light tracking-wide capitalize">
-                    {title}
-                </h2>
+            <CardsSection title={title}>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                     {children}
                 </div>
-            </section>
+            </CardsSection>
         </>
     );
 }

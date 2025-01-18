@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { api_img_url } from "../globals/globals";
 import { Link } from "react-router-dom";
 import Rating from "./Rating";
+import axios from "axios";
 
 function Card({ type, media }) {
     let {
@@ -14,7 +15,20 @@ function Card({ type, media }) {
         poster_path,
         vote_average,
     } = { ...media };
-    if (original_language == "en") original_language = "gb";
+    switch (original_language) {
+        case "en":
+            original_language = "gb";
+            break;
+        case "ja":
+            original_language = "jp";
+            break;
+        case "ko":
+            original_language = "kr";
+            break;
+        case "zh":
+            original_language = "cn";
+            break;
+    }
 
     const imgSrc = `https://flagsapi.com/${original_language.toUpperCase()}/shiny/32.png`;
 
