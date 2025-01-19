@@ -47,6 +47,7 @@ function SearchMedia() {
 
     return (
         <>
+        <p className="mt-10 ml-10 text-3xl font-light">Results for: {query}</p>
             <CardsContainer title="movies">
                 {movies.map((movie) => (
                     <Card key={movie.id} type="movie" media={movie}></Card>
