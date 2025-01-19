@@ -12,7 +12,7 @@ function Header() {
 
     return (
         <header className="fixed top-0 z-10 flex items-center justify-between w-full p-4 bg-black shadow-lg shadow-stone-800">
-            <nav className="flex items-center gap-12">
+            <nav className="flex items-center gap-10">
                 <Link
                     onClick={handleLinkClick}
                     to={"/"}
@@ -27,8 +27,6 @@ function Header() {
     );
 }
 
-// home tv shows movies new & popular browse by languages
-
 const appLinks = [
     { to: "/", label: "Home" },
     { to: "/tv", label: "Tv Shows" },
@@ -37,10 +35,10 @@ const appLinks = [
     { to: "/browse", label: "Browse by Languages" },
 ];
 
-const linkClasses = "hover:text-white font-light tracking-wide text-lg";
+const linkClasses = "hover:text-white font-light tracking-wide text-sm md:text-lg";
 function Navbar() {
     return (
-        <div className="flex gap-4 text-white">
+        <div className="absolute left-0 flex w-full gap-6 px-2 py-2 text-white bg-[#000000e0] border-b md:border-0 md:py-0 md:static top-full text-center">
             {appLinks.map((link, index) => (
                 <NavLink
                     key={index}

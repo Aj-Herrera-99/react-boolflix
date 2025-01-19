@@ -13,7 +13,10 @@ function DetailPage() {
     const location = useLocation();
     const type = location.state?.type;
 
-    if (!type) return <NotFound></NotFound>;
+    if (!type) {
+        console.error("Please specify media type in Link!");
+        return <NotFound />;
+    }
 
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);

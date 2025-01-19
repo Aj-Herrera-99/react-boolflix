@@ -2,7 +2,6 @@ import React, { useRef } from "react";
 import { api_img_url } from "../globals/globals";
 import { Link } from "react-router-dom";
 import Rating from "./Rating";
-import axios from "axios";
 
 function Card({ type, media }) {
     let {

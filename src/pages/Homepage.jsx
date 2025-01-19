@@ -52,16 +52,16 @@ function JumboSection({ jumboMedia }) {
     };
     return (
         <>
-            <FrameClip src={getJumboVideoPath()}/>
+            <FrameClip src={getJumboVideoPath()} />
             <section style={{ minHeight: "calc(100vh - 80px - 22vh)" }}>
                 <div className="flex flex-col flex-wrap content-start h-full px-12 pt-20">
-                    <p className="text-3xl font-light tracking-wider text-stone-300">
+                    <p className="text-lg font-light tracking-wider md:text-3xl text-stone-300">
                         Now Playing
                     </p>
-                    <h1 className="w-3/4 py-3 font-semibold tracking-wide text-7xl">
+                    <h1 className="py-3 text-3xl font-semibold tracking-wide md:w-3/4 md:text-7xl">
                         {jumboMedia.title}
                     </h1>
-                    <p className="w-2/5 my-3 text-lg font-light tracking-wider">
+                    <p className="my-3 text-lg font-light tracking-wider md:w-2/5">
                         {jumboMedia.overview}
                     </p>
                     <div className="flex gap-3 p-3 text-xl">
