@@ -2,9 +2,9 @@ import React from 'react'
 
 function FrameClip({src, title}) {
   return (
-      <div className="absolute w-full h-full bg-[#00000090]">
+      <div className="absolute -z-10 w-full h-full bg-[#00000090]">
           <iframe
-              className="absolute top-0 left-0 w-full h-full -z-10 iframe"
+              className="absolute top-0 left-0 w-full h-full iframe"
               src={`https://www.youtube.com/embed/${src}?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1&loop=1`}
               title={title}
               frameborder="0"
