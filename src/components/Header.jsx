@@ -37,7 +37,7 @@ const appLinks = [
     { to: "/browse", label: "Browse by Languages" },
 ];
 
-const linkClasses = "hover:text-white";
+const linkClasses = "hover:text-white font-light tracking-wide text-lg";
 function Navbar() {
     return (
         <div className="flex gap-4 text-white">

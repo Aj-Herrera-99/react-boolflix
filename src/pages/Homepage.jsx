@@ -10,6 +10,7 @@ import { getRndInteger } from "../utils/utils";
 import { api_img_url } from "../globals/globals";
 import { Link } from "react-router-dom";
 
+// todo: separazione componenti dei populari, separazione in file degli inner components (generalizzazione)
 function Homepage() {
     const { movies, series, jumboMedia, popularSeries, popularMovies } =
         useGlobalContext();
@@ -29,7 +30,7 @@ function Homepage() {
             ></JumboSection>
             <section className="my-8">
                 <h2 className="my-2 ml-4 text-xl">Popular TV Series</h2>
-                <div className="flex gap-1 py-2 overflow-auto border-r-4 border-r-stone-300 scrollbar-hide">
+                <div className="flex gap-1 py-3 overflow-auto border-r-2 rounded-md border-r-white scrollbar-hide">
                     {popularSeries.map((serie) => (
                         <Link
                             to={`/search/${serie.id}`}
@@ -49,7 +50,7 @@ function Homepage() {
             </section>
             <section className="my-8">
                 <h2 className="my-2 ml-4 text-xl">Popular Movies</h2>
-                <div className="flex gap-1 py-2 overflow-auto border-r-4 border-r-stone-300 scrollbar-hide">
+                <div className="flex gap-1 py-3 overflow-auto border-r-2 rounded-md border-r-white scrollbar-hide">
                     {popularMovies.map((movie) => (
                         <Link
                             to={`/search/${movie.id}`}
@@ -135,6 +136,7 @@ function SliderContainer({ title, children }) {
         centerMode: true,
         swipeToSlide: true,
         dots: true,
+        className: "my-2",
         appendDots: (dots) => (
             <div
                 style={{
