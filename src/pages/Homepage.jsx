@@ -11,7 +11,6 @@ import { Link } from "react-router-dom";
 import MiniCard from "../components/MiniCard";
 import MiniCardsSection from "../components/MiniCardsSection";
 
-// todo: separazione in file degli inner components (generalizzazione)
 function Homepage() {
     const { movies, series, jumboMedia, popularSeries, popularMovies } =
         useGlobalContext();

@@ -10,6 +10,7 @@ import { getRndInteger } from "../utils/utils";
 
 const GlobalContext = createContext();
 
+// todo: avere states separati per movies e trending movies => isHomepage forse non servira piu
 const GlobalContextProvider = ({ children }) => {
     const [movies, setMovies] = useState([]);
     const [series, setSeries] = useState([]);
