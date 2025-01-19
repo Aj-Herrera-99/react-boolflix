@@ -7,96 +7,54 @@ import Card from "../components/Card";
 import CardsSection from "../components/CardsSection";
 import FrameClip from "../components/FrameClip";
 import { getRndInteger } from "../utils/utils";
-import { api_img_url } from "../globals/globals";
 import { Link } from "react-router-dom";
+import MiniCard from "../components/MiniCard";
+import MiniCardsSection from "../components/MiniCardsSection";
 
-// todo: separazione componenti dei populari, separazione in file degli inner components (generalizzazione)
+// todo: separazione in file degli inner components (generalizzazione)
 function Homepage() {
     const { movies, series, jumboMedia, popularSeries, popularMovies } =
         useGlobalContext();
-    let jumboVideoPath;
-    if (jumboMedia.videos) {
-        const getJumboVideoPath = () => {
-            const rndIndex = getRndInteger(0, jumboMedia.videos.results.length);
-            return jumboMedia.videos.results[rndIndex]?.key;
-        };
-        jumboVideoPath = getJumboVideoPath();
-    }
+
     return (
         <>
-            <JumboSection
-                path={jumboVideoPath}
-                jumboMedia={jumboMedia}
-            ></JumboSection>
-            <section className="my-8">
-                <h2 className="my-2 ml-4 text-xl">Popular TV Series</h2>
-                <div className="flex gap-1 py-3 overflow-auto border-r-2 rounded-md border-r-white scrollbar-hide">
-                    {popularSeries.map((serie) => (
-                        <Link
-                            to={`/search/${serie.id}`}
-                            state={{ type: "serie" }}
-                            key={serie.id}
-                            className="!aspect-video min-w-[150px]"
-                            title={serie.name}
-                        >
-                            <img
-                                className="object-cover w-full h-full"
-                                src={`${api_img_url}/w342${serie.backdrop_path}`}
-                                alt={serie.name}
-                            />
-                        </Link>
-                    ))}
-                </div>
-            </section>
-            <section className="my-8">
-                <h2 className="my-2 ml-4 text-xl">Popular Movies</h2>
-                <div className="flex gap-1 py-3 overflow-auto border-r-2 rounded-md border-r-white scrollbar-hide">
-                    {popularMovies.map((movie) => (
-                        <Link
-                            to={`/search/${movie.id}`}
-                            state={{ type: "movie" }}
-                            key={movie.id}
-                            className="!aspect-video min-w-[150px]"
-                            title={movie.title}
-                        >
-                            <img
-                                className="object-cover w-full h-full"
-                                src={`${api_img_url}/w342${movie.backdrop_path}`}
-                            />
-                        </Link>
-                    ))}
-                </div>
-            </section>
+            <JumboSection jumboMedia={jumboMedia} />
+            <MiniCardsSection title="popular series">
+                {popularSeries.map((serie) => (
+                    <MiniCard key={serie.id} media={serie} type="serie" />
+                ))}
+            </MiniCardsSection>
+            <MiniCardsSection title="popular movies">
+                {popularMovies.map((movie) => (
+                    <MiniCard key={movie.id} media={movie} type="movie" />
+                ))}
+            </MiniCardsSection>
             <SliderContainer title="trending movies">
                 {movies.map((movie) => (
-                    <Card
-                        key={movie.id}
-                        type="movie"
-                        media={movie}
-                        isMini={false}
-                    ></Card>
+                    <Card key={movie.id} type="movie" media={movie}></Card>
                 ))}
             </SliderContainer>
             <SliderContainer title="trending series">
                 {series.map((serie) => (
-                    <Card
-                        key={serie.id}
-                        type="serie"
-                        media={serie}
-                        isMini={false}
-                    ></Card>
+                    <Card key={serie.id} type="serie" media={serie}></Card>
                 ))}
             </SliderContainer>
         </>
     );
 }
 
-function JumboSection({ path, jumboMedia, children }) {
+function JumboSection({ jumboMedia }) {
+    const getJumboVideoPath = () => {
+        if (jumboMedia.videos) {
+            const rndIndex = getRndInteger(0, jumboMedia.videos.results.length);
+            return jumboMedia.videos.results[rndIndex]?.key;
+        }
+    };
     return (
         <>
-            <FrameClip src={path} title={"title"} />
-            <section style={{ height: "calc(100vh - 80px - 22vh)" }}>
-                <div className="flex flex-col px-12 pt-20">
+            <FrameClip src={getJumboVideoPath()}/>
+            <section style={{ minHeight: "calc(100vh - 80px - 22vh)" }}>
+                <div className="flex flex-col flex-wrap content-start h-full px-12 pt-20">
                     <p className="text-3xl font-light tracking-wider text-stone-300">
                         Now Playing
                     </p>
@@ -119,7 +77,6 @@ function JumboSection({ path, jumboMedia, children }) {
                         </Link>
                     </div>
                 </div>
-                <div className="">{children}</div>
             </section>
         </>
     );
@@ -137,15 +94,6 @@ function SliderContainer({ title, children }) {
         swipeToSlide: true,
         dots: true,
         className: "my-2",
-        appendDots: (dots) => (
-            <div
-                style={{
-                    padding: "0px",
-                }}
-            >
-                <ul style={{ margin: "0px" }}> {dots} </ul>
-            </div>
-        ),
         responsive: [
             {
                 breakpoint: 1280,

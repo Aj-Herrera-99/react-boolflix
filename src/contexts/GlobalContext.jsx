@@ -59,7 +59,6 @@ const GlobalContextProvider = ({ children }) => {
                         })
                         .then((res) => {
                             setJumboMedia(res.data);
-                            console.log(res.data);
                         });
                 }
             )

@@ -47,17 +47,12 @@ function DetailPage() {
             })
             .finally(() => setIsLoading(false));
     }, []);
-    
+
     if (isLoading) return <Loader />;
-    
+
     return (
         <>
-            {videoPath && (
-                <FrameClip
-                    src={videoPath}
-                    title={type === "movie" ? title : name}
-                />
-            )}
+            {videoPath && <FrameClip src={videoPath} />}
             <section className="relative flex flex-col items-center justify-between py-8 gap-y-12 lg:flex-row">
                 <div className="lg:w-[40vw]">
                     <img
