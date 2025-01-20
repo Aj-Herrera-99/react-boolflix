@@ -1,7 +1,9 @@
+import React, { lazy, Suspense } from "react";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import DefaultLayout from "./pages/DefaultLayout";
-import Homepage from "./pages/Homepage";
+const LazyHomepage = lazy(() => import("./pages/Homepage"));
+// import Homepage from "./pages/Homepage";
 import SearchMedia from "./pages/SearchMedia";
 import DetailPage from "./pages/DetailPage";
 import NotFound from "./pages/NotFound";
@@ -15,7 +17,14 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route Component={DefaultLayout}>
-                        <Route index Component={Homepage}></Route>
+                        <Route
+                            index
+                            element={
+                                <Suspense fallback="Loading . . .">
+                                    <LazyHomepage />
+                                </Suspense>
+                            }
+                        ></Route>
                         <Route path="/search" Component={SearchMedia}></Route>
                         <Route
                             path="/search/:id"

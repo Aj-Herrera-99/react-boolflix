@@ -24,7 +24,7 @@ function SearchMedia() {
     };
 
     const createSearchMutation = useMutation({
-        mutationFn: () => null, //funzione che non fa nnt perche riparte fetch dei dati al re render con useQueries
+        mutationFn: () => null, //funzione che non fa nnt perche, invalidando una delle query, riparte fetch dei dati al re render
         onSuccess: () => {
             queryClient.invalidateQueries(["searchMovies"]); // me ne basta uno per re-renderizzare l'intero componente
         },
