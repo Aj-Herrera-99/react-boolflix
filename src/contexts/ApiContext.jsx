@@ -5,11 +5,7 @@ import { fetchJumboMedia, fetchPopulars, fetchTrendings } from "./ApiStore";
 
 const ApiContext = createContext();
 
-
-
 const ApiContextProvider = ({ children }) => {
-    
-
     const queries = useQueries({
         queries: [
             {
@@ -34,6 +30,10 @@ const ApiContextProvider = ({ children }) => {
             },
         ],
     });
+
+    if (queries.some((query) => query.isLoading)) return <Loader />;
+    if (queries.some((query) => query.isError)) return <isError />;
+
     const [
         trendingMovies,
         trendingSeries,
@@ -41,10 +41,6 @@ const ApiContextProvider = ({ children }) => {
         popularSeries,
         jumboMedia,
     ] = queries;
-
-    if (queries.some((query) => query.isLoading)) return <Loader />;
-    if (queries.some((query) => query.isError))
-        return <pre>Network error . . .</pre>;
 
     const value = {
         trendingMovies: trendingMovies.data,

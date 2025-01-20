@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import React from "react";
+import { useLocation, useParams } from "react-router-dom";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 import { api_base_url, api_img_url, api_key } from "../globals/globals";
 import Rating from "../components/Rating";
 import Loader from "../components/Loader";
-import { getRndInteger } from "../utils/utils";
-import FrameClip from "../components/FrameClip";
-import axios from "axios";
+import Error from "../components/Error";
 import NotFound from "./NotFound";
+import FrameClip from "../components/FrameClip";
+import { getRndInteger } from "../utils/utils";
 
 function DetailPage() {
     const { id } = useParams();
@@ -18,9 +20,24 @@ function DetailPage() {
         return <NotFound />;
     }
 
-    const navigate = useNavigate();
-    const [isLoading, setIsLoading] = useState(false);
-    const [media, setMedia] = useState({});
+    const mediaQuery = useQuery({
+        queryKey: ["mediaDetail"],
+        queryFn: async () => {
+            const endpoint = type === "movie" ? "/movie" : "/tv";
+            const params = {
+                api_key,
+                append_to_response: "credits,videos",
+            };
+            const res = await axios.get(`${api_base_url}${endpoint}/${id}`, {
+                params,
+            });
+            return res.data;
+        },
+    });
+    if (mediaQuery.isLoading) return <Loader />;
+    if (mediaQuery.isError) return <Error />;
+
+    const media = mediaQuery.data;
 
     let { title, name, poster_path, vote_average, overview, credits, videos } =
         media;
@@ -34,25 +51,6 @@ function DetailPage() {
         videoPath = videos.results[rndIndex]?.key;
     }
 
-    useEffect(() => {
-        setIsLoading(true);
-        const endpoint = type === "movie" ? "/movie" : "/tv";
-        const params = {
-            api_key,
-            append_to_response: "credits,videos",
-        };
-        axios
-            .get(`${api_base_url}${endpoint}/${id}`, { params })
-            .then((res) => setMedia(res.data))
-            .catch((e) => {
-                console.error(e);
-                navigate("/error");
-            })
-            .finally(() => setIsLoading(false));
-    }, []);
-
-    if (isLoading) return <Loader />;
-
     return (
         <>
             {videoPath && <FrameClip src={videoPath} />}
@@ -61,17 +59,17 @@ function DetailPage() {
                     <img
                         className="w-[60vw] sm:w-[350px] mx-auto border border-white rounded-md "
                         src={`${api_img_url}/w500${poster_path}`}
-                        alt={type === "movie" ? title : name}
+                        alt={title ? title : name}
                     />
                 </div>
 
                 <div className="flex flex-col gap-6 w-[100vw] lg:w-[60vw]">
                     <div className="flex flex-col flex-wrap px-8 gap-y-1 ">
                         <h1
-                            title={type === "movie" ? title : name}
+                            title={title ? title : name}
                             className="pb-4 text-5xl font-semibold tracking-wider lg:font-light md:text-6xl"
                         >
-                            {type === "movie" ? title : name}
+                            {title ? title : name}
                         </h1>
                         <div className="flex gap-2 text-2xl">
                             <Rating stars={Math.ceil(vote_average / 2)} />
