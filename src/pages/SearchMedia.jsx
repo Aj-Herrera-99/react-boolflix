@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useGlobalContext } from "../contexts/GlobalContext";
 import Card from "../components/Card";
 import { useSearchParams } from "react-router-dom";
 import CardsSection from "../components/CardsSection";
@@ -8,7 +7,8 @@ import axios from "axios";
 import Loader from "../components/Loader";
 
 function SearchMedia() {
-    const { movies, series, setMovies, setSeries } = useGlobalContext();
+    const [movies, setMovies] = useState([]);
+    const [series, setSeries] = useState([]);
     const [searchParams] = useSearchParams();
     const [isLoading, setIsLoading] = useState(false);
     const query = searchParams.get("q");
@@ -47,7 +47,9 @@ function SearchMedia() {
 
     return (
         <>
-        <p className="mt-10 ml-10 text-3xl font-light">Results for: {query}</p>
+            <p className="mt-10 ml-10 text-3xl font-light">
+                Results for: {query}
+            </p>
             <CardsContainer title="movies">
                 {movies.map((movie) => (
                     <Card key={movie.id} type="movie" media={movie}></Card>

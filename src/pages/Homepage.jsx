@@ -1,5 +1,5 @@
 import React from "react";
-import { useGlobalContext } from "../contexts/GlobalContext";
+import { useApiContext } from "../contexts/ApiContext";
 import Slider from "@ant-design/react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -12,30 +12,35 @@ import MiniCard from "../components/MiniCard";
 import MiniCardsSection from "../components/MiniCardsSection";
 
 function Homepage() {
-    const { movies, series, jumboMedia, popularSeries, popularMovies } =
-        useGlobalContext();
+    const {
+        jumboMedia,
+        popularSeries,
+        popularMovies,
+        trendingSeries,
+        trendingMovies,
+    } = useApiContext();
 
     return (
         <>
             <JumboSection jumboMedia={jumboMedia} />
             <MiniCardsSection title="popular series">
-                {popularSeries.map((serie) => (
+                {popularSeries?.map((serie) => (
                     <MiniCard key={serie.id} media={serie} type="serie" />
                 ))}
             </MiniCardsSection>
             <MiniCardsSection title="popular movies">
-                {popularMovies.map((movie) => (
+                {popularMovies?.map((movie) => (
                     <MiniCard key={movie.id} media={movie} type="movie" />
                 ))}
             </MiniCardsSection>
-            <SliderContainer title="trending movies">
-                {movies.map((movie) => (
-                    <Card key={movie.id} type="movie" media={movie}></Card>
+            <SliderContainer title="trending series">
+                {trendingSeries.map((serie) => (
+                    <Card key={serie.id} type="serie" media={serie}></Card>
                 ))}
             </SliderContainer>
-            <SliderContainer title="trending series">
-                {series.map((serie) => (
-                    <Card key={serie.id} type="serie" media={serie}></Card>
+            <SliderContainer title="trending movies">
+                {trendingMovies.map((movie) => (
+                    <Card key={movie.id} type="movie" media={movie}></Card>
                 ))}
             </SliderContainer>
         </>
@@ -58,7 +63,7 @@ function JumboSection({ jumboMedia }) {
                         Now Playing
                     </p>
                     <h1 className="py-3 text-3xl font-semibold tracking-wide md:w-3/4 md:text-7xl">
-                        {jumboMedia.title}
+                        {jumboMedia.title ? jumboMedia.title : jumboMedia.name}
                     </h1>
                     <p className="my-3 text-lg font-light tracking-wider md:w-2/5">
                         {jumboMedia.overview}
