@@ -1,50 +1,58 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Card from "../components/Card";
 import { useSearchParams } from "react-router-dom";
 import CardsSection from "../components/CardsSection";
-import { api_key, api_search_url } from "../globals/globals";
-import axios from "axios";
+import { api_key } from "../globals/globals";
 import Loader from "../components/Loader";
+import { useMutation, useQueries, useQueryClient } from "@tanstack/react-query";
+import { fetchSearchQuery } from "../contexts/ApiStore";
+import Error from "../components/Error";
 
 function SearchMedia() {
-    const [movies, setMovies] = useState([]);
-    const [series, setSeries] = useState([]);
     const [searchParams] = useSearchParams();
-    const [isLoading, setIsLoading] = useState(false);
     const query = searchParams.get("q");
-
-    useEffect(() => {
-        if (query) {
-            setIsLoading(true);
-            const params = {
-                api_key,
-                query,
-            };
-
-            Promise.all([
-                axios.get(`${api_search_url}/movie`, { params }),
-                axios.get(`${api_search_url}/tv`, { params }),
-            ])
-                .then(([resMovie, resSeries]) => {
-                    setMovies(resMovie.data.results);
-                    setSeries(resSeries.data.results);
-                })
-                .catch((err) => console.error(err))
-                .finally(() => {
-                    setIsLoading(false);
-                });
-        }
-    }, [searchParams]);
-
     if (!query)
         return (
             <div className="m-8 text-5xl font-light tracking-wide">
                 Find A Movie or TV Show!
             </div>
         );
+    const queryClient = useQueryClient();
+    const params = {
+        api_key,
+        query,
+    };
 
-    if (isLoading) return <Loader />;
+    const createSearchMutation = useMutation({
+        mutationFn: () => null, //funzione che non fa nnt perche riparte fetch dei dati al re render con useQueries
+        onSuccess: () => {
+            queryClient.invalidateQueries(["searchMovies"]); // me ne basta uno per re-renderizzare l'intero componente
+        },
+    });
 
+    const queries = useQueries({
+        queries: [
+            {
+                queryKey: ["searchMovies"],
+                queryFn: () => fetchSearchQuery("movie", params),
+            },
+            {
+                queryKey: ["searchSeries"],
+                queryFn: () => fetchSearchQuery("tv", params),
+            },
+        ],
+    });
+
+    const [moviesSearched, seriesSearched] = queries;
+    const movies = moviesSearched?.data;
+    const series = seriesSearched?.data;
+
+    useEffect(() => {
+        createSearchMutation.mutate();
+    }, [searchParams]);
+
+    if (queries.some((query) => query.isLoading)) return <Loader />;
+    if (queries.some((query) => query.isError)) return <Error />;
     return (
         <>
             <p className="mt-10 ml-10 text-3xl font-light">

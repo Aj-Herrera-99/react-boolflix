@@ -1,7 +1,9 @@
+import { useQueryClient } from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function SearchBar() {
+
     const [isShown, setIsShown] = useState(false);
 
     const inputRef = useRef(null);
@@ -10,6 +12,7 @@ function SearchBar() {
 
     const handleSearchSubmit = (e) => {
         e.preventDefault();
+        
         navigate(`/search?q=${encodeURIComponent(inputRef.current.value)}`);
         setIsShown(false);
     };

@@ -3,6 +3,7 @@ import {
     api_base_url,
     api_discover_url,
     api_key,
+    api_search_url,
     api_trending_url,
 } from "../globals/globals";
 import { getRndInteger } from "../utils/utils";
@@ -21,6 +22,13 @@ export const fetchTrendings = async (media) => {
 export const fetchPopulars = async (media) => {
     const res = await axios.get(`${api_discover_url}/${media}`, {
         params: { ...params, sort_by: "popularity.desc" },
+    });
+    return res.data.results;
+};
+
+export const fetchSearchQuery = async (media, params) => {
+    const res = await axios.get(`${api_search_url}/${media}`, {
+        params,
     });
     return res.data.results;
 };
