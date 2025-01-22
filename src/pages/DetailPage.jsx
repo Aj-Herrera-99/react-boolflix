@@ -41,6 +41,7 @@ function DetailPage() {
 
     let { title, name, poster_path, vote_average, overview, credits, videos } =
         media;
+        console.log(media)
     let cast;
     if (credits) {
         cast = credits.cast;
@@ -56,11 +57,13 @@ function DetailPage() {
             {videoPath && <FrameClip src={videoPath} />}
             <section className="relative flex flex-col items-center justify-between py-8 gap-y-12 lg:flex-row">
                 <div className="lg:w-[40vw]">
-                    <img
-                        className="w-[60vw] sm:w-[350px] mx-auto border border-white rounded-md "
-                        src={`${api_img_url}/w500${poster_path}`}
-                        alt={title ? title : name}
-                    />
+                    <picture>
+                        <img
+                            className="w-[60vw] sm:w-[350px] mx-auto border border-white rounded-md "
+                            src={`${api_img_url}/w300${poster_path}`}
+                            alt={title ? title : name}
+                        />
+                    </picture>
                 </div>
 
                 <div className="flex flex-col gap-6 w-[100vw] lg:w-[60vw]">
