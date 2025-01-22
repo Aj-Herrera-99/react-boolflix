@@ -90,7 +90,8 @@ function Card({ type, media }) {
                         <strong className="text-xl font-bold capitalize md:text-lg lg:text-2xl">
                             Rating: <br />{" "}
                         </strong>
-                        <Rating stars={Math.ceil(vote_average / 2)} />
+                        <span className="mr-1">{(vote_average / 2).toFixed(2)}</span>
+                        <Rating stars={vote_average / 2} />
                     </div>
                 </div>
             </Link>

@@ -71,8 +71,9 @@ function DetailPage() {
                         >
                             {title ? title : name}
                         </h1>
-                        <div className="flex gap-2 text-2xl">
-                            <Rating stars={Math.ceil(vote_average / 2)} />
+                        <div className="flex items-center gap-2 text-2xl">
+                            <span>{(vote_average / 2).toFixed(2)}</span>
+                            <Rating stars={vote_average / 2} />
                         </div>
                     </div>
                     <div className="px-8">
