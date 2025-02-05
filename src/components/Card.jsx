@@ -71,14 +71,19 @@ function Card({ type, media }) {
                         <strong className="text-xl font-bold capitalize md:text-lg lg:text-2xl">
                             Title:
                         </strong>{" "}
-                        <br /> {type === "movie" ? title : name}
+                        <br />{" "}
+                        <span className="line-clamp-2">
+                            {type === "movie" ? title : name}
+                        </span>
                     </p>
                     <p>
                         <strong className="text-xl font-bold capitalize md:text-lg lg:text-2xl">
                             Original Title:
                         </strong>{" "}
                         <br />
-                        {type === "movie" ? original_title : original_name}
+                        <span className="line-clamp-2">
+                            {type === "movie" ? original_title : original_name}
+                        </span>
                     </p>
                     <p>
                         <strong className="text-xl font-bold capitalize md:text-lg lg:text-2xl">
@@ -90,7 +95,9 @@ function Card({ type, media }) {
                         <strong className="text-xl font-bold capitalize md:text-lg lg:text-2xl">
                             Rating: <br />{" "}
                         </strong>
-                        <span className="mr-1">{(vote_average / 2).toFixed(2)}</span>
+                        <span className="mr-1">
+                            {(vote_average / 2).toFixed(2)}
+                        </span>
                         <Rating stars={vote_average / 2} />
                     </div>
                 </div>

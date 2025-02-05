@@ -4,14 +4,14 @@ import { useSearchParams } from "react-router-dom";
 import CardsSection from "../components/CardsSection";
 import { api_key } from "../globals/globals";
 import Loader from "../components/Loader";
-import { useQueries, useQueryClient } from "@tanstack/react-query";
+import { useQueries } from "@tanstack/react-query";
 import { fetchSearchQuery } from "../contexts/ApiStore";
 import Error from "../components/Error";
+import LoadMoreBtn from "../components/LoadMoreBtn";
 
 function SearchMedia() {
     const [searchParams] = useSearchParams();
     const query = searchParams.get("q");
-    const queryClient = useQueryClient();
     const params = {
         api_key,
         query,
@@ -21,22 +21,18 @@ function SearchMedia() {
         queries: [
             {
                 queryKey: ["searchMovies"],
-                enabled: !!query,
                 queryFn: () => fetchSearchQuery("movie", params),
             },
             {
                 queryKey: ["searchSeries"],
-                enabled: !!query,
                 queryFn: () => fetchSearchQuery("tv", params),
             },
         ],
     });
 
     useEffect(() => {
-        if (query){
-            queryClient.invalidateQueries(["searchMovies", "searchSeries"]);
-        }
-    }, [searchParams]);
+        queries.forEach((query) => query.refetch());
+    }, [query]);
 
     if (!query) {
         return (
@@ -45,38 +41,44 @@ function SearchMedia() {
             </div>
         );
     }
-
-    if (queries.some((query) => query.isLoading)) return <Loader />;
+    if (queries.some((query) => query.isLoading || query.isFetching))
+        return <Loader />;
     if (queries.some((query) => query.isError)) return <Error />;
+    if (queries.every((query) => query.isSuccess)) {
+        const [moviesSearched, seriesSearched] = queries;
+        const movies = moviesSearched.data.results;
+        const series = seriesSearched.data.results;
 
-    const [moviesSearched, seriesSearched] = queries;
-    const movies = moviesSearched?.data;
-    const series = seriesSearched?.data;
-
-    return (
-        <>
-            <p className="mt-10 ml-10 text-3xl font-light">
-                Results for: {query}
-            </p>
-            <CardsContainer title="movies">
-                {movies.map((movie) => (
-                    <Card key={movie.id} type="movie" media={movie}></Card>
-                ))}
-            </CardsContainer>
-            <CardsContainer title="series">
-                {series.map((serie) => (
-                    <Card key={serie.id} type="serie" media={serie}></Card>
-                ))}
-            </CardsContainer>
-        </>
-    );
+        return (
+            <>
+                <p className="mt-10 ml-10 text-3xl font-light">
+                    Results for: {query}
+                </p>
+                <CardsContainer title="movies">
+                    {movies.map((movie) => (
+                        <Card key={movie.id} type="movie" media={movie}></Card>
+                    ))}
+                    {/* <LoadMoreBtn
+                    currPage={currMoviesPage}
+                    totalPages={totalMoviesPages}
+                    onClick={handleLoadMoreMovies}
+                    /> */}
+                </CardsContainer>
+                <CardsContainer title="series">
+                    {series.map((serie) => (
+                        <Card key={serie.id} type="serie" media={serie}></Card>
+                    ))}
+                </CardsContainer>
+            </>
+        );
+    }
 }
 
 function CardsContainer({ title, children }) {
     return (
         <>
             <CardsSection title={title}>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                <div className="relative grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                     {children}
                 </div>
             </CardsSection>

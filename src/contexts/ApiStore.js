@@ -13,6 +13,8 @@ const params = {
     language: "en-US",
 };
 
+// todo: ritornare res.data => results si ricavera nel chiamante
+
 export const fetchTrendings = async (media) => {
     const res = await axios.get(`${api_trending_url}/${media}/week`, {
         params,
@@ -30,7 +32,7 @@ export const fetchSearchQuery = async (media, params) => {
     const res = await axios.get(`${api_search_url}/${media}`, {
         params,
     });
-    return res.data.results;
+    return res.data;
 };
 export const fetchJumboMedia = async (media) => {
     let resList;
