@@ -121,7 +121,7 @@ function SliderContainer({ title, children }) {
     };
 
     return (
-        <CardsSection title={title}>
+        <CardsSection title={title} type="slider">
             <Slider {...settings} swipe={true}>
                 {children}
             </Slider>
