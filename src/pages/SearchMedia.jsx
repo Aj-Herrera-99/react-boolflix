@@ -1,7 +1,6 @@
 import React from "react";
 import { useSearchParams } from "react-router-dom";
-import MoviesSearchResults from "../components/MoviesSearchResults";
-import SeriesSearchResults from "../components/SeriesSearchResults";
+import MediaSearchResults from "../components/MediaSearchResults";
 
 function SearchMedia() {
     const [searchParams] = useSearchParams();
@@ -16,11 +15,21 @@ function SearchMedia() {
     }
     return (
         <>
-            <p className="mt-10 ml-10 text-3xl font-light">
+            <h1 className="mt-10 ml-10 text-3xl font-light">
                 Results for: {query}
-            </p>
-            <MoviesSearchResults query={query} />
-            <SeriesSearchResults query={query} />
+            </h1>
+            <MediaSearchResults
+                query={query}
+                media="movies"
+                type="movie"
+                endpoint="movie"
+            />
+            <MediaSearchResults
+                query={query}
+                media="series"
+                type="serie"
+                endpoint="tv"
+            />
         </>
     );
 }

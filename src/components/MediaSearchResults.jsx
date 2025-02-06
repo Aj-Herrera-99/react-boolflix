@@ -8,7 +8,7 @@ import { fetchSearchQuery } from "../contexts/ApiStore";
 import Error from "./Error";
 import LoadMoreBtn from "./LoadMoreBtn";
 
-function MoviesSearchResults({ query }) {
+function MediaSearchResults({ query, media, type, endpoint }) {
     const [page, setPage] = useState(1);
     const queryClient = useQueryClient();
 
@@ -19,9 +19,9 @@ function MoviesSearchResults({ query }) {
 
     const { data, isLoading, isError, isSuccess, fetchNextPage } =
         useInfiniteQuery({
-            queryKey: ["movies", query],
+            queryKey: [media, query],
             queryFn: ({ pageParam }) =>
-                fetchSearchQuery("movie", { ...params, page: pageParam }),
+                fetchSearchQuery(endpoint, { ...params, page: pageParam }),
             initialPageParam: 1,
             getNextPageParam: (_lastPage, _allPages, lastPageParam) => {
                 return lastPageParam + 1;
@@ -32,24 +32,24 @@ function MoviesSearchResults({ query }) {
         window.scrollTo({ top: 0 });
         setPage(1);
         return () => {
-            queryClient.removeQueries({ queryKey: ["movies", query] });
+            queryClient.removeQueries({ queryKey: [media, query] });
         };
     }, [query]);
 
     if (isLoading) return <Loader />;
     if (isError) return <Error />;
     if (isSuccess) {
-        const moviesTotPages = data?.pages[0]?.total_pages;
+        const seriesTotPages = data?.pages[0]?.total_pages;
         return (
             <>
-                <CardsSection title="movies">
+                <CardsSection title={media}>
                     {data?.pages?.map((group, i) => (
                         <Fragment key={i}>
-                            {group.results.map((movie) => (
+                            {group.results.map((serie) => (
                                 <Card
-                                    key={movie.id}
-                                    type="movie"
-                                    media={movie}
+                                    key={serie.id}
+                                    type={type}
+                                    media={serie}
                                 ></Card>
                             ))}
                         </Fragment>
@@ -57,7 +57,7 @@ function MoviesSearchResults({ query }) {
 
                     <LoadMoreBtn
                         currPage={page}
-                        totalPages={moviesTotPages}
+                        totalPages={seriesTotPages}
                         onClick={() => {
                             setPage((curr) => curr + 1);
                             fetchNextPage();
@@ -69,4 +69,4 @@ function MoviesSearchResults({ query }) {
     }
 }
 
-export default MoviesSearchResults;
+export default MediaSearchResults;
