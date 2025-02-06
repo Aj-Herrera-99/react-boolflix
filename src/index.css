@@ -14,12 +14,91 @@
 }
 
 body {
-    background-color: #434343;
-    background-color: rgba(0, 0, 0, 1);
+    @apply bg-black;
 }
 
 html {
-    scroll-behavior: smooth;
+    @apply scroll-smooth;
     -ms-overflow-style: none;
     scrollbar-width: none;
+}
+
+#root {
+    @apply pt-[80px] min-h-[100vh];
+}
+
+.loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #fff;
+    border-bottom-color: #ff3d00;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.bounce-anim:hover {
+    animation: bounce 2.5s ease-out infinite;
+}
+
+@keyframes bounce {
+    0%,
+    50%,
+    100% {
+        translate: 0 0;
+    }
+
+    25%,
+    75% {
+        translate: 0 -5px;
+    }
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.debug {
+    border: solid 1px #ff3d00;
+}
+
+@media (max-width: 1024px) {
+    .slick-dots,
+    .slick-arrow {
+        display: none !important;
+    }
+}
+.slick-dots li button:before {
+    color: white !important;
+}
+
+.slick-next,
+.slick-prev {
+    scale: 2;
+}
+
+.slick-arrow.slick-prev {
+    translate: -20px;
+}
+.slick-arrow.slick-next {
+    translate: 20px;
+}
+
+.thumb-container {
+    aspect-ratio: 4/6;
 }

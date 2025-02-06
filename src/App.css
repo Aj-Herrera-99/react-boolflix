@@ -23,7 +23,6 @@
     }
 }
 
-/* ogni card ha un div wrapper figlio anim che permette, all'hover su di essa, un'altra animazione senza sovrascrivere slider */
 .bounce-anim:hover {
     animation: bounce 2.5s ease-out infinite;
 }
