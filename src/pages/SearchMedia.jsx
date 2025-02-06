@@ -1,38 +1,36 @@
-import React, { useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Card from "../components/Card";
 import { useSearchParams } from "react-router-dom";
 import CardsSection from "../components/CardsSection";
 import { api_key } from "../globals/globals";
 import Loader from "../components/Loader";
-import { useQueries } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { fetchSearchQuery } from "../contexts/ApiStore";
 import Error from "../components/Error";
 import LoadMoreBtn from "../components/LoadMoreBtn";
+import MoviesSearchResults from "../components/MoviesSearchResults";
+import SeriesSearchResults from "../components/SeriesSearchResults";
 
 function SearchMedia() {
+    // const [page, setPage] = useState(1);
     const [searchParams] = useSearchParams();
     const query = searchParams.get("q");
-    const params = {
-        api_key,
-        query,
-    };
 
-    const queries = useQueries({
-        queries: [
-            {
-                queryKey: ["searchMovies"],
-                queryFn: () => fetchSearchQuery("movie", params),
-            },
-            {
-                queryKey: ["searchSeries"],
-                queryFn: () => fetchSearchQuery("tv", params),
-            },
-        ],
-    });
+    // const params = {
+    //     api_key,
+    //     query,
+    // };
 
-    useEffect(() => {
-        queries.forEach((query) => query.refetch());
-    }, [query]);
+    // const { data, isLoading, isError, isSuccess, hasNextPage, fetchNextPage } =
+    //     useInfiniteQuery({
+    //         queryKey: ["movies"],
+    //         queryFn: ({ pageParam }) =>
+    //             fetchSearchQuery("movie", { ...params, page: pageParam }),
+    //         initialPageParam: page,
+    //         getNextPageParam: (lastPage, allPages, lastPageParam) => {
+    //             return lastPageParam + 1;
+    //         },
+    //     });
 
     if (!query) {
         return (
@@ -41,49 +39,51 @@ function SearchMedia() {
             </div>
         );
     }
-    if (queries.some((query) => query.isLoading || query.isFetching))
-        return <Loader />;
-    if (queries.some((query) => query.isError)) return <Error />;
-    if (queries.every((query) => query.isSuccess)) {
-        const [moviesSearched, seriesSearched] = queries;
-        const movies = moviesSearched.data.results;
-        const series = seriesSearched.data.results;
-
-        return (
-            <>
-                <p className="mt-10 ml-10 text-3xl font-light">
-                    Results for: {query}
-                </p>
-                <CardsContainer title="movies">
-                    {movies.map((movie) => (
-                        <Card key={movie.id} type="movie" media={movie}></Card>
-                    ))}
-                    {/* <LoadMoreBtn
-                    currPage={currMoviesPage}
-                    totalPages={totalMoviesPages}
-                    onClick={handleLoadMoreMovies}
-                    /> */}
-                </CardsContainer>
-                <CardsContainer title="series">
-                    {series.map((serie) => (
-                        <Card key={serie.id} type="serie" media={serie}></Card>
-                    ))}
-                </CardsContainer>
-            </>
-        );
-    }
-}
-
-function CardsContainer({ title, children }) {
+    // if (isLoading) return <Loader />;
+    // if (isError) return <Error />;
+    // if (isSuccess) {
+    //     console.log(data.pages);
+    //     const moviesTotPages = data.pages[0].total_pages;
     return (
         <>
-            <CardsSection title={title}>
-                <div className="relative grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                    {children}
-                </div>
-            </CardsSection>
+            <p className="mt-10 ml-10 text-3xl font-light">
+                Results for: {query}
+            </p>
+            <MoviesSearchResults query={query} />
+            <SeriesSearchResults query={query} />
         </>
     );
 }
 
 export default SearchMedia;
+// if (queries.every((query) => query.isSuccess)) {
+//     const [moviesSearched, seriesSearched] = queries;
+//     const movies = moviesSearched.data.results;
+//     const series = seriesSearched.data.results;
+
+//     const moviesTotPages = moviesSearched.data.total_pages;
+
+//     return (
+//         <>
+//             <p className="mt-10 ml-10 text-3xl font-light">
+//                 Results for: {query}
+//             </p>
+//             <CardsContainer title="movies">
+//                 {movies.map((movie) => (
+//                     <Card key={movie.id} type="movie" media={movie}></Card>
+//                 ))}
+//                 <LoadMoreBtn
+//                     currPage={page}
+//                     totalPages={moviesTotPages}
+//                     onClick={() => setPage((curr) => curr + 1)}
+//                 />
+//             </CardsContainer>
+//             <CardsContainer title="series">
+//                 {series.map((serie) => (
+//                     <Card key={serie.id} type="serie" media={serie}></Card>
+//                 ))}
+//             </CardsContainer>
+//         </>
+//     );
+// }
+// }
