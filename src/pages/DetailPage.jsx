@@ -21,7 +21,7 @@ function DetailPage() {
     }
 
     const mediaQuery = useQuery({
-        queryKey: ["mediaDetail"],
+        queryKey: ["mediaDetail", id],
         queryFn: async () => {
             const endpoint = type === "movie" ? "/movie" : "/tv";
             const params = {

@@ -45,11 +45,11 @@ function MediaSearchResults({ query, media, type, endpoint }) {
                 <CardsSection title={media}>
                     {data?.pages?.map((group, i) => (
                         <Fragment key={i}>
-                            {group.results.map((serie) => (
+                            {group?.results?.map((media) => (
                                 <Card
-                                    key={serie.id}
+                                    key={media.id}
                                     type={type}
-                                    media={serie}
+                                    media={media}
                                 ></Card>
                             ))}
                         </Fragment>
