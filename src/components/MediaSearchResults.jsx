@@ -55,14 +55,16 @@ function MediaSearchResults({ query, media, type, endpoint }) {
                         </Fragment>
                     ))}
 
-                    <LoadMoreBtn
-                        currPage={page}
-                        totalPages={seriesTotPages}
-                        onClick={() => {
-                            setPage((curr) => curr + 1);
-                            fetchNextPage();
-                        }}
-                    />
+                    {seriesTotPages > 1 && (
+                        <LoadMoreBtn
+                            currPage={page}
+                            totalPages={seriesTotPages}
+                            onClick={() => {
+                                setPage((curr) => curr + 1);
+                                fetchNextPage();
+                            }}
+                        />
+                    )}
                 </CardsSection>
             </>
         );
