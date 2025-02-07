@@ -5,6 +5,7 @@ import MediaSearchResults from "../components/MediaSearchResults";
 function SearchMedia() {
     const [searchParams] = useSearchParams();
     const query = searchParams.get("q");
+    console.log("altro test")
 
     if (!query) {
         return (
