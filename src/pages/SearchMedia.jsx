@@ -6,6 +6,7 @@ function SearchMedia() {
     const [searchParams] = useSearchParams();
     const query = searchParams.get("q");
 
+    console.log("test")
     if (!query) {
         return (
             <div className="m-8 text-5xl font-light tracking-wide">
