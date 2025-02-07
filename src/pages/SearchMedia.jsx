@@ -9,6 +9,8 @@ function SearchMedia() {
 
     console.log("test")
     console.log("bella")
+
+    console.log("oddioo")
     console.log("organizing")
     if (!query) {
         return (
