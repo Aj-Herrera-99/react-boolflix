@@ -10,6 +10,7 @@ function SearchMedia() {
     console.log("test")
     console.log("bella")
     console.log("organizing")
+    console.log("altro organizing")
     if (!query) {
         return (
             <div className="m-8 text-5xl font-light tracking-wide">
