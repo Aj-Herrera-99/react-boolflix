@@ -1,5 +1,5 @@
-import React, { lazy, Suspense } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { lazy, Suspense } from "react";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Loader from "./components/Loader";
@@ -14,7 +14,7 @@ const queryClient = new QueryClient();
 function App() {
     return (
         <QueryClientProvider client={queryClient}>
-            <BrowserRouter>
+            <HashRouter>
                 <Routes>
                     <Route Component={DefaultLayout}>
                         <Route
@@ -37,7 +37,7 @@ function App() {
                         <Route path="*" Component={NotFound}></Route>
                     </Route>
                 </Routes>
-            </BrowserRouter>
+            </HashRouter>
             <ReactQueryDevtools />
         </QueryClientProvider>
     );
